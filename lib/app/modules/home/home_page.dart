@@ -1,31 +1,42 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:payback/app/modules/home/home_store.dart';
+import 'package:payback/app/modules/shared/auth/auth_controller.dart';
+import 'package:payback/app/modules/util/colors/colors.dart';
+
+import 'home_store.dart';
 
 class HomePage extends StatefulWidget {
-  final String title;
-  const HomePage({Key? key, this.title = "Home"}) : super(key: key);
+  const HomePage({Key? key, this.authController}) : super(key: key);
+
+  final AuthController? authController;
 
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() => HomePageState();
 }
 
-class _HomePageState extends ModularState<HomePage, HomeStore> {
+class HomePageState extends State<HomePage> {
+  final HomeStore store = Modular.get();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Counter'),
-      ),
-      body: Observer(
-        builder: (context) => Text('${store.counter}'),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          store.increment();
-        },
-        child: const Icon(Icons.add),
+    return SafeArea(
+      top: Platform.isAndroid,
+      child: Scaffold(
+        backgroundColor: SweetPetColors.grey100,
+        body: Observer(
+          builder: (_) {
+            return Container();
+          },
+        ),
       ),
     );
   }

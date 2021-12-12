@@ -1,0 +1,10 @@
+{
+  "telaLogin": {
+    "usuario": "Usuário",
+    "senha": "Senha",
+    "esqueceuSuaSenha": "Esqueceu sua senha ?",
+    "entrar": "Entrar",
+    "ou": "ou",
+    "cadastrar": "Cadastre-se"
+  }
+}

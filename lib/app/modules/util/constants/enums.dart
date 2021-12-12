@@ -1,0 +1,4 @@
+enum eTypeUser { DEVEPOLER, USER, VETERINARIAN }
+enum eSpecie { OTHER, CANINE, FELINE }
+enum ePathology { UNDEFINED, NOTCHONIC, CHONIC, ALLERGIC }
+enum eGender { UNDEFINED, MALE, FEMALE }
