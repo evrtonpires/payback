@@ -3,7 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:payback/app/modules/util/colors/colors.dart';
-import 'package:payback/app/modules/util/constants/Icons_constants.dart';
+import 'package:payback/app/modules/util/constants/icons_constants.dart';
 import 'package:payback/app/modules/util/widgets/size_font.dart';
 
 class NoConnectionWidget extends StatelessWidget {
@@ -39,7 +39,7 @@ class NoConnectionWidget extends StatelessWidget {
             ),
             Center(
               child: SvgPicture.asset(
-                IconConstant.noConnectionSvg,
+                IconConstant.noConnection,
                 width: MediaQuery.of(context).size.width,
               ),
             ),

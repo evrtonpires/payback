@@ -1,10 +1,32 @@
 {
   "telaLogin": {
+    "cnpj": "CNPJ",
     "usuario": "Usuário",
     "senha": "Senha",
     "esqueceuSuaSenha": "Esqueceu sua senha ?",
     "entrar": "Entrar",
     "ou": "ou",
     "cadastrar": "Cadastre-se"
+  },
+  "telaRecoveryPassword": {
+    "email": "Email",
+    "recuperarSenha": "Recuperar Senha",
+    "verificarEmail": "Verificar Email",
+    "alterarSenha": "Alterar Senha",
+    "infoAlteracaoDeSenha": "Alteração de senha",
+    "infoSenhaAlteradaComSucesso": "Sua senha foi alterada com sucesso!",
+    "confirmacaoDeSEnha": "Confirmacao de Senha",
+    "codigo": "Código"
+  },
+  "telaCadastroUsuario": {
+    "cadastro": "Cadastro",
+    "cnpj": "CNPJ",
+    "cpf": "CPF",
+    "nome": "Nome",
+    "email": "Email",
+    "confirmacaoEmail": "Confirmação de Email",
+    "senha": "Senha",
+    "confirmacaoSenha": "Confirmação de Senha",
+    "cadastrar": "Cadastrar"
   }
 }

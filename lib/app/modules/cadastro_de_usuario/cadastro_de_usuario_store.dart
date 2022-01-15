@@ -1,8 +1,10 @@
+import 'package:cpf_cnpj_validator/cnpj_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:payback/app/modules/shared/auth/auth_controller.dart';
 import 'package:payback/app/modules/shared/models/user/user_model.dart';
+import 'package:cpf_cnpj_validator/cpf_validator.dart';
 
 part 'cadastro_de_usuario_store.g.dart';
 
@@ -11,28 +13,40 @@ class CadastroDeUsuarioStore = _CadastroDeUsuarioStoreBase
 
 abstract class _CadastroDeUsuarioStoreBase with Store {
   _CadastroDeUsuarioStoreBase({required this.authController}) {
+    focusCnpj = FocusNode();
     focusName = FocusNode();
     focusEmail = FocusNode();
     focusEmailConfirmation = FocusNode();
+    focusCpf = FocusNode();
     focusPassword = FocusNode();
     focusPasswordConfirmation = FocusNode();
-    focusCRMV = FocusNode();
   }
 
   final AuthController authController;
 
+  late final FocusNode focusCnpj;
   late final FocusNode focusName;
   late final FocusNode focusEmail;
   late final FocusNode focusEmailConfirmation;
+  late final FocusNode focusCpf;
   late final FocusNode focusPassword;
   late final FocusNode focusPasswordConfirmation;
-  late final FocusNode focusCRMV;
 
   @observable
   bool isLoading = false;
 
   @observable
   bool keepConnected = true;
+
+//----------------------------------------------------------------------------
+  @observable
+  String? cnpj;
+
+  @action
+  void setCnpj(String newCnpj) => cnpj = newCnpj;
+
+  @observable
+  String? messageCnpjError;
 
 //----------------------------------------------------------------------------
   @observable
@@ -68,6 +82,16 @@ abstract class _CadastroDeUsuarioStoreBase with Store {
 
 //----------------------------------------------------------------------------
   @observable
+  String? cpf;
+
+  @action
+  void setCpf(String newCpf) => cpf = newCpf;
+
+  @observable
+  String? messageCpfError;
+
+//----------------------------------------------------------------------------
+  @observable
   String? password;
 
   @action
@@ -88,23 +112,26 @@ abstract class _CadastroDeUsuarioStoreBase with Store {
   String? messagePasswordConfirmationError;
 
 //----------------------------------------------------------------------------
-  @observable
-  String? crmv;
 
-  @action
-  void setCRMV(String newCRMV) => crmv = newCRMV;
+  bool cnpjValidate(BuildContext context, {bool requestFocus = false}) {
+    messageCnpjError = null;
 
-  @observable
-  String? messageCRMVError;
-
-//----------------------------------------------------------------------------
-
-  @observable
-  int? intETypeUser = 1;
-
-  @action
-  void setUserOrCRMV(int value) {
-    intETypeUser = value;
+    if (cnpj == null || cnpj!.isEmpty) {
+      messageCnpjError = 'Campo obrigatório';
+      if (requestFocus) {
+        focusCnpj.requestFocus();
+      }
+      return false;
+    } else if (CNPJValidator.isValid(cnpj)) {
+      messageCnpjError = null;
+      return true;
+    } else {
+      messageCnpjError = 'Informe um CNPJ válido';
+      if (requestFocus) {
+        focusCnpj.requestFocus();
+      }
+      return false;
+    }
   }
 
 //----------------------------------------------------------------------------
@@ -166,6 +193,30 @@ abstract class _CadastroDeUsuarioStoreBase with Store {
       messageEmailError = null;
     }
     return true;
+  }
+
+
+//----------------------------------------------------------------------------
+
+  bool cpfValidate(BuildContext context, {bool requestFocus = false}) {
+    messageCpfError = null;
+
+    if (cpf == null || cpf!.isEmpty) {
+      messageCpfError = 'Campo obrigatório';
+      if (requestFocus) {
+        focusCpf.requestFocus();
+      }
+      return false;
+    } else if (CPFValidator.isValid(cpf)) {
+      messageCpfError = null;
+      return true;
+    } else {
+      messageCpfError = 'Informe um CPF válido';
+      if (requestFocus) {
+        focusCpf.requestFocus();
+      }
+      return false;
+    }
   }
 
   //----------------------------------------------------------------------------
@@ -230,24 +281,12 @@ abstract class _CadastroDeUsuarioStoreBase with Store {
     return true;
   }
 
-  //----------------------------------------------------------------------------
-  bool crmvValidate(BuildContext context, {bool requestFocus = false}) {
-    messageCRMVError = null;
-    if (crmv == null || crmv!.isEmpty && intETypeUser == 2) {
-      messageCRMVError = 'Campo obrigatório';
-      if (requestFocus) {
-        focusCRMV.requestFocus();
-      }
-      return false;
-    } else {
-      crmv = null;
-    }
-    return true;
-  }
-
 //----------------------------------------------------------------------------
   @action
   Future<void> autenticate(BuildContext context) async {
+    if (!cnpjValidate(context, requestFocus: true)) {
+      return;
+    }
     if (!nameValidate(context, requestFocus: true)) {
       return;
     }
@@ -263,20 +302,14 @@ abstract class _CadastroDeUsuarioStoreBase with Store {
     if (!passwordConfirmationValidate(context, requestFocus: true)) {
       return;
     }
-    if (intETypeUser == 2 && !crmvValidate(context, requestFocus: true)) {
-      return;
-    }
-    if (messageNameError == null &&
+
+    if (messageCnpjError == null &&
+        messageNameError == null &&
         messageEmailError == null &&
         messagePasswordError == null &&
-        messageCRMVError == null &&
         !isLoading) {
-
-      UserModel user = UserModel(
-          id: null,
-          name: name!,
-          email: email!,
-          password: password!);
+      UserModel user =
+          UserModel(id: null, name: name!, email: email!, password: password!);
 
       isLoading = true;
       bool? response = await authController.signUp(

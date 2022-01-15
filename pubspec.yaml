@@ -19,6 +19,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   connectivity_plus: ^2.1.0
   carousel_slider: 4.0.0
+  cpf_cnpj_validator: ^2.0.0
 
   # D
   dio: 4.0.0
@@ -43,6 +44,7 @@ dependencies:
 
   # M
   mobx: ^2.0.5
+  mask_text_input_formatter: ^2.0.0
 
   # P
   path_provider: ^2.0.8
@@ -50,7 +52,6 @@ dependencies:
   # S
   shared_preferences: 2.0.6
   share: 2.0.4
-  speech_balloon: 0.0.4
 
   # U
   uuid: 3.0.4
@@ -65,6 +66,7 @@ dev_dependencies:
 
   # F
   flutter_lints: ^1.0.4
+  flutter_native_splash: ^1.2.1
 
   # J
   json_annotation: ^4.4.0
@@ -73,6 +75,10 @@ dev_dependencies:
   # M
   mobx_codegen: ^2.0.4
   modular_test: ^1.0.1+1
+
+flutter_native_splash:
+  image: assets/icon/splash_art/logo_splash.svg
+  color: "474797"
 
 
 # For information on the generic Dart part of this file, see the
@@ -91,7 +97,6 @@ flutter:
     - assets/icon/
     - assets/icon/login/
     - assets/icon/load/
-    - assets/icon/category/
     - assets/icon/splash_art/
     - assets/i18n/
 
@@ -125,3 +130,8 @@ scripts:
   #flutter packages pub run build_runner build --delete-conflicting-outputs
   mobxWatch: flutter packages pub run build_runner watch --delete-conflicting-outputs
   mobxBuild: flutter packages pub run build_runner build --delete-conflicting-outputs
+
+#flutter pub run flutter_launcher_icons:main - comando para gerar icon
+#flutter pub pub run flutter_native_splash:create - comando para gerar splashArt
+#flutter pub run flutter_i18n validate - Este comando é usado para validar todos os arquivos de tradução dentro do projeto
+#flutter pub run flutter_i18n diff en.yaml it.json - Este comando é usado para encontrar as diferenças entre as chaves dos arquivos de tradução desejados

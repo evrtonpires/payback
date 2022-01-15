@@ -9,6 +9,36 @@ part of 'login_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$LoginStore on LoginStoreBase, Store {
+  final _$cnpjAtom = Atom(name: 'LoginStoreBase.cnpj');
+
+  @override
+  String? get cnpj {
+    _$cnpjAtom.reportRead();
+    return super.cnpj;
+  }
+
+  @override
+  set cnpj(String? value) {
+    _$cnpjAtom.reportWrite(value, super.cnpj, () {
+      super.cnpj = value;
+    });
+  }
+
+  final _$messageCnpjErrorAtom = Atom(name: 'LoginStoreBase.messageCnpjError');
+
+  @override
+  String? get messageCnpjError {
+    _$messageCnpjErrorAtom.reportRead();
+    return super.messageCnpjError;
+  }
+
+  @override
+  set messageCnpjError(String? value) {
+    _$messageCnpjErrorAtom.reportWrite(value, super.messageCnpjError, () {
+      super.messageCnpjError = value;
+    });
+  }
+
   final _$userAtom = Atom(name: 'LoginStoreBase.user');
 
   @override
@@ -113,6 +143,17 @@ mixin _$LoginStore on LoginStoreBase, Store {
       ActionController(name: 'LoginStoreBase');
 
   @override
+  void setCnpj(String newCnpj) {
+    final _$actionInfo = _$LoginStoreBaseActionController.startAction(
+        name: 'LoginStoreBase.setCnpj');
+    try {
+      return super.setCnpj(newCnpj);
+    } finally {
+      _$LoginStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setLogin(String newUser) {
     final _$actionInfo = _$LoginStoreBaseActionController.startAction(
         name: 'LoginStoreBase.setLogin');
@@ -137,6 +178,8 @@ mixin _$LoginStore on LoginStoreBase, Store {
   @override
   String toString() {
     return '''
+cnpj: ${cnpj},
+messageCnpjError: ${messageCnpjError},
 user: ${user},
 messageLoginError: ${messageLoginError},
 password: ${password},

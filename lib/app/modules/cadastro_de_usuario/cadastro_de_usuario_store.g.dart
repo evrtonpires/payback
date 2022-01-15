@@ -40,6 +40,37 @@ mixin _$CadastroDeUsuarioStore on _CadastroDeUsuarioStoreBase, Store {
     });
   }
 
+  final _$cnpjAtom = Atom(name: '_CadastroDeUsuarioStoreBase.cnpj');
+
+  @override
+  String? get cnpj {
+    _$cnpjAtom.reportRead();
+    return super.cnpj;
+  }
+
+  @override
+  set cnpj(String? value) {
+    _$cnpjAtom.reportWrite(value, super.cnpj, () {
+      super.cnpj = value;
+    });
+  }
+
+  final _$messageCnpjErrorAtom =
+      Atom(name: '_CadastroDeUsuarioStoreBase.messageCnpjError');
+
+  @override
+  String? get messageCnpjError {
+    _$messageCnpjErrorAtom.reportRead();
+    return super.messageCnpjError;
+  }
+
+  @override
+  set messageCnpjError(String? value) {
+    _$messageCnpjErrorAtom.reportWrite(value, super.messageCnpjError, () {
+      super.messageCnpjError = value;
+    });
+  }
+
   final _$nameAtom = Atom(name: '_CadastroDeUsuarioStoreBase.name');
 
   @override
@@ -135,6 +166,37 @@ mixin _$CadastroDeUsuarioStore on _CadastroDeUsuarioStoreBase, Store {
     });
   }
 
+  final _$cpfAtom = Atom(name: '_CadastroDeUsuarioStoreBase.cpf');
+
+  @override
+  String? get cpf {
+    _$cpfAtom.reportRead();
+    return super.cpf;
+  }
+
+  @override
+  set cpf(String? value) {
+    _$cpfAtom.reportWrite(value, super.cpf, () {
+      super.cpf = value;
+    });
+  }
+
+  final _$messageCpfErrorAtom =
+      Atom(name: '_CadastroDeUsuarioStoreBase.messageCpfError');
+
+  @override
+  String? get messageCpfError {
+    _$messageCpfErrorAtom.reportRead();
+    return super.messageCpfError;
+  }
+
+  @override
+  set messageCpfError(String? value) {
+    _$messageCpfErrorAtom.reportWrite(value, super.messageCpfError, () {
+      super.messageCpfError = value;
+    });
+  }
+
   final _$passwordAtom = Atom(name: '_CadastroDeUsuarioStoreBase.password');
 
   @override
@@ -201,53 +263,6 @@ mixin _$CadastroDeUsuarioStore on _CadastroDeUsuarioStoreBase, Store {
     });
   }
 
-  final _$crmvAtom = Atom(name: '_CadastroDeUsuarioStoreBase.crmv');
-
-  @override
-  String? get crmv {
-    _$crmvAtom.reportRead();
-    return super.crmv;
-  }
-
-  @override
-  set crmv(String? value) {
-    _$crmvAtom.reportWrite(value, super.crmv, () {
-      super.crmv = value;
-    });
-  }
-
-  final _$messageCRMVErrorAtom =
-      Atom(name: '_CadastroDeUsuarioStoreBase.messageCRMVError');
-
-  @override
-  String? get messageCRMVError {
-    _$messageCRMVErrorAtom.reportRead();
-    return super.messageCRMVError;
-  }
-
-  @override
-  set messageCRMVError(String? value) {
-    _$messageCRMVErrorAtom.reportWrite(value, super.messageCRMVError, () {
-      super.messageCRMVError = value;
-    });
-  }
-
-  final _$intETypeUserAtom =
-      Atom(name: '_CadastroDeUsuarioStoreBase.intETypeUser');
-
-  @override
-  int? get intETypeUser {
-    _$intETypeUserAtom.reportRead();
-    return super.intETypeUser;
-  }
-
-  @override
-  set intETypeUser(int? value) {
-    _$intETypeUserAtom.reportWrite(value, super.intETypeUser, () {
-      super.intETypeUser = value;
-    });
-  }
-
   final _$autenticateAsyncAction =
       AsyncAction('_CadastroDeUsuarioStoreBase.autenticate');
 
@@ -258,6 +273,17 @@ mixin _$CadastroDeUsuarioStore on _CadastroDeUsuarioStoreBase, Store {
 
   final _$_CadastroDeUsuarioStoreBaseActionController =
       ActionController(name: '_CadastroDeUsuarioStoreBase');
+
+  @override
+  void setCnpj(String newCnpj) {
+    final _$actionInfo = _$_CadastroDeUsuarioStoreBaseActionController
+        .startAction(name: '_CadastroDeUsuarioStoreBase.setCnpj');
+    try {
+      return super.setCnpj(newCnpj);
+    } finally {
+      _$_CadastroDeUsuarioStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void setName(String newName) {
@@ -293,6 +319,17 @@ mixin _$CadastroDeUsuarioStore on _CadastroDeUsuarioStoreBase, Store {
   }
 
   @override
+  void setCpf(String newCpf) {
+    final _$actionInfo = _$_CadastroDeUsuarioStoreBaseActionController
+        .startAction(name: '_CadastroDeUsuarioStoreBase.setCpf');
+    try {
+      return super.setCpf(newCpf);
+    } finally {
+      _$_CadastroDeUsuarioStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setPassword(String newPassword) {
     final _$actionInfo = _$_CadastroDeUsuarioStoreBaseActionController
         .startAction(name: '_CadastroDeUsuarioStoreBase.setPassword');
@@ -316,45 +353,24 @@ mixin _$CadastroDeUsuarioStore on _CadastroDeUsuarioStoreBase, Store {
   }
 
   @override
-  void setCRMV(String newCRMV) {
-    final _$actionInfo = _$_CadastroDeUsuarioStoreBaseActionController
-        .startAction(name: '_CadastroDeUsuarioStoreBase.setCRMV');
-    try {
-      return super.setCRMV(newCRMV);
-    } finally {
-      _$_CadastroDeUsuarioStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setUserOrCRMV(int value) {
-    final _$actionInfo = _$_CadastroDeUsuarioStoreBaseActionController
-        .startAction(name: '_CadastroDeUsuarioStoreBase.setUserOrCRMV');
-    try {
-      return super.setUserOrCRMV(value);
-    } finally {
-      _$_CadastroDeUsuarioStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 isLoading: ${isLoading},
 keepConnected: ${keepConnected},
+cnpj: ${cnpj},
+messageCnpjError: ${messageCnpjError},
 name: ${name},
 messageNameError: ${messageNameError},
 email: ${email},
 messageEmailError: ${messageEmailError},
 emailConfirmation: ${emailConfirmation},
 messageEmailConfirmationError: ${messageEmailConfirmationError},
+cpf: ${cpf},
+messageCpfError: ${messageCpfError},
 password: ${password},
 messagePasswordError: ${messagePasswordError},
 passwordConfirmation: ${passwordConfirmation},
-messagePasswordConfirmationError: ${messagePasswordConfirmationError},
-crmv: ${crmv},
-messageCRMVError: ${messageCRMVError},
-intETypeUser: ${intETypeUser}
+messagePasswordConfirmationError: ${messagePasswordConfirmationError}
     ''';
   }
 }

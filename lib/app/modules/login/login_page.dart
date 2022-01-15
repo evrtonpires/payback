@@ -6,18 +6,15 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:payback/app/app_routing.dart';
 import 'package:payback/app/modules/login/login_store.dart';
-import 'package:payback/app/modules/recovery_password/recovery_password_routing.dart';
 import 'package:payback/app/modules/shared/auth/auth_controller.dart';
 import 'package:payback/app/modules/util/colors/colors.dart';
-import 'package:payback/app/modules/util/constants/Icons_constants.dart';
+import 'package:payback/app/modules/util/constants/icons_constants.dart';
 import 'package:payback/app/modules/util/loading_page/loading_page_widget.dart';
 import 'package:payback/app/modules/util/widgets/size_font.dart';
 import 'package:payback/app/modules/util/widgets/text_field_with_validation_widget.dart';
-
-import 'login_routing.dart';
-import 'widgets/help_dialog.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key, required this.authController}) : super(key: key);
@@ -30,6 +27,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends ModularState<LoginPage, LoginStore>
     with SingleTickerProviderStateMixin {
+  MaskTextInputFormatter maskFormatter = MaskTextInputFormatter(
+      mask: '##.###.###/####-##', filter: {"#": RegExp(r'[0-9]')});
+  TextEditingController cnpjController = TextEditingController();
   TextEditingController loginController = TextEditingController();
   TextEditingController senhaController = TextEditingController();
 
@@ -37,6 +37,12 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
   void initState() {
     super.initState();
     widget.authController.checkConnectivityListen();
+    widget.authController
+        .getUserSharedPref(stringValue: 'cnpjValue')
+        .then((value) {
+      store.setLogin(value);
+      cnpjController.text = value;
+    });
     widget.authController
         .getUserSharedPref(stringValue: 'userValue')
         .then((value) {
@@ -77,7 +83,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                             Align(
                               alignment: Alignment.center,
                               child: SvgPicture.asset(
-                                IconConstant.iconLogoSvg,
+                                IconConstant.logoColor,
                                 height:
                                     MediaQuery.of(context).size.height * .14,
                               ),
@@ -94,10 +100,56 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                             Expanded(
                               child: Container(
                                   padding: EdgeInsets.only(
-                                      left: MediaQuery.of(context).size.width *
-                                          .1,
-                                      right: MediaQuery.of(context).size.width *
-                                          .0),
+                                    left:
+                                        MediaQuery.of(context).size.width * .065,
+                                    right:
+                                        MediaQuery.of(context).size.width * .065,
+                                  ),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: Observer(
+                                          builder: (_) {
+                                            return TextFieldWithValidationWidget(
+                                              controller: cnpjController,
+                                              focusNode: store.focusCnpj,
+                                              textInputFormatter: maskFormatter,
+                                              placeholder:
+                                                  FlutterI18n.translate(context,
+                                                      'telaLogin.cnpj'),
+                                              onChanged: (newCnpj) {
+                                                store.setCnpj(newCnpj);
+                                                store.cnpjValidate(context);
+                                              },
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              textInputType:
+                                                  TextInputType.number,
+                                              messageError:
+                                                  store.messageCnpjError,
+                                              onValidator: () =>
+                                                  store.cnpjValidate(context),
+                                              onEditingComplete: () =>
+                                                  FocusScope.of(context)
+                                                      .requestFocus(
+                                                          store.focusLogin),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+                            ),
+                            Expanded(
+                              child: Container(
+                                  padding: EdgeInsets.only(
+                                    left:
+                                        MediaQuery.of(context).size.width * .065,
+                                    right:
+                                        MediaQuery.of(context).size.width * .065,
+                                  ),
                                   child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -129,33 +181,15 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                                           },
                                         ),
                                       ),
-                                      IconButton(
-                                        onPressed: () {
-                                          showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return HelpDialog(
-                                                  text: 'Insira seu email',
-                                                  y: -.55,
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      .1,
-                                                );
-                                              });
-                                        },
-                                        icon: const Icon(Icons.help),
-                                        iconSize: 20,
-                                        color: SweetPetColors.orangeLight,
-                                      ),
                                     ],
                                   )),
                             ),
                             Expanded(
                               child: Container(
                                 padding: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * .1,
-                                  right: MediaQuery.of(context).size.width * .0,
+                                  left: MediaQuery.of(context).size.width * .065,
+                                  right:
+                                      MediaQuery.of(context).size.width * .065,
                                 ),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -184,8 +218,8 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                                                     store.messagePasswordError,
                                                 onValidator: () => store
                                                     .passwordValidate(context),
-                                                onEditingComplete: () =>
-                                                    store.autenticate(context),
+                                                onEditingComplete: () => FocusScope.of(context)
+                                                    .dispose(),
                                                 isPassword: true,
                                               );
                                             },
@@ -201,46 +235,23 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                                                   FlutterI18n.translate(context,
                                                       'telaLogin.esqueceuSuaSenha'),
                                                   style: const TextStyle(
-                                                    color: SweetPetColors
-                                                        .primary800,
+                                                    color:
+                                                        SweetPetColors.primary,
                                                   ),
                                                 ),
-                                                onTap: () {
-                                                  store
-                                                      .checkConnectivityPushReplacementNamed(
-                                                    context: context,
-                                                    rout:
-                                                        RecoveryPasswordRouteNamed
-                                                            .recoveryPassword
-                                                            .fullPath!,
-                                                    isReplacement: false,
-                                                  );
-                                                },
+                                                onTap: () => store
+                                                    .checkConnectivityPushReplacementNamed(
+                                                  context: context,
+                                                  rout: AppRouteNamed
+                                                      .recoveryPassword
+                                                      .fullPath!,
+                                                  isReplacement: false,
+                                                ),
                                               ),
                                             ),
                                           ),
                                         ],
                                       ),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return HelpDialog(
-                                                text:
-                                                    '* Minimo 8 caracteres.\n* Números de 0-9.\n* Letras maiusculas.\n* Letras minusculas.\n* Caracteres especiais: #?!@\$%^&*.%()/-',
-                                                y: -.25,
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    .13,
-                                              );
-                                            });
-                                      },
-                                      icon: const Icon(Icons.help),
-                                      iconSize: 20,
-                                      color: SweetPetColors.orangeLight,
                                     ),
                                   ],
                                 ),
@@ -284,8 +295,9 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                                                     context, 'telaLogin.entrar')
                                                 .toUpperCase(),
                                             style: const TextStyle(
-                                                color: SweetPetColors.white,
-                                                fontWeight: FontWeight.bold),
+                                              color: SweetPetColors.white,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -306,15 +318,16 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                                       onTap: () {
                                         store
                                             .checkConnectivityPushReplacementNamed(
-                                                context: context,
-                                                rout: AppRouteNamed
-                                                    .login.fullPath!);
+                                          context: context,
+                                          rout: AppRouteNamed.signUp.fullPath!,
+                                          isReplacement: false,
+                                        );
                                       },
                                       child: Text(
                                         FlutterI18n.translate(
                                             context, 'telaLogin.cadastrar'),
                                         style: TextStyle(
-                                            color: SweetPetColors.primary800,
+                                            color: SweetPetColors.primary,
                                             fontSize: getValueFont(
                                                 context: context,
                                                 valueMin: 16)),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:payback/app/modules/util/colors/colors.dart';
 
 import 'base_text_field_widget.dart';
@@ -20,6 +21,7 @@ class TextFieldWithValidationWidget extends StatelessWidget {
     this.floatingLabelBehavior = FloatingLabelBehavior.always,
     this.maxLength,
     this.textInputType,
+    this.textInputFormatter,
   }) : super(key: key);
 
   final TextEditingController? controller;
@@ -36,6 +38,7 @@ class TextFieldWithValidationWidget extends StatelessWidget {
   final int? maxLength;
   final String? messageError;
   final FloatingLabelBehavior floatingLabelBehavior;
+  final TextInputFormatter? textInputFormatter;
 
   bool get isError {
     return messageError != null && messageError!.isNotEmpty;
@@ -88,6 +91,7 @@ class TextFieldWithValidationWidget extends StatelessWidget {
           isEnable: isEnabled,
           onChanged: onChanged,
           maxLength: maxLength,
+          textInputFormatter: textInputFormatter,
           onEditingComplete: () {
             if (textInputAction == TextInputAction.next) {
               FocusScope.of(context).nextFocus();

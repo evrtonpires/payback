@@ -1,11 +1,13 @@
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:payback/app/modules/shared/auth/auth_controller.dart';
 import 'package:payback/app/modules/util/colors/colors.dart';
-import 'package:payback/app/modules/util/constants/Icons_constants.dart';
+import 'package:payback/app/modules/util/constants/icons_constants.dart';
 import 'package:payback/app/modules/util/loading_page/loading_page_widget.dart';
 import 'package:payback/app/modules/util/no_connection/no_connection_widget.dart';
 import 'package:payback/app/modules/util/widgets/size_font.dart';
@@ -26,44 +28,51 @@ class CadastroDeUsuarioPage extends StatefulWidget {
 
 class CadastroDeUsuarioPageState
     extends ModularState<CadastroDeUsuarioPage, CadastroDeUsuarioStore> {
+  late TextEditingController cnpjController;
+
   late TextEditingController nameController;
 
   late TextEditingController emailController;
   late TextEditingController emailConfirmationController;
 
-  late TextEditingController passwordController;
+  late TextEditingController cpfController;
 
+  late TextEditingController passwordController;
   late TextEditingController passwordControllerConfirmation;
 
-  late TextEditingController crmvController;
+  MaskTextInputFormatter maskFormatterCNPJ = MaskTextInputFormatter(
+      mask: '##.###.###/####-##', filter: {"#": RegExp(r'[0-9]')});
+  MaskTextInputFormatter maskFormatterCPF = MaskTextInputFormatter(
+      mask: '###.###.###-##', filter: {"#": RegExp(r'[0-9]')});
 
   @override
   void initState() {
     super.initState();
+    cnpjController = TextEditingController();
     nameController = TextEditingController();
     emailController = TextEditingController();
     emailConfirmationController = TextEditingController();
+    cpfController = TextEditingController();
     passwordController = TextEditingController();
     passwordControllerConfirmation = TextEditingController();
-    crmvController = TextEditingController();
   }
 
   @override
   void dispose() {
+    cnpjController.dispose();
     nameController.dispose();
     emailController.dispose();
     emailConfirmationController.dispose();
     passwordController.dispose();
     passwordControllerConfirmation.dispose();
-    crmvController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
-      return widget.authController.isEnableConnecticonnectivity
-          ? Stack(
+      if (widget.authController.isEnableConnecticonnectivity) {
+        return Stack(
               children: [
                 Scaffold(
                   body: Container(
@@ -75,12 +84,10 @@ class CadastroDeUsuarioPageState
                         Align(
                           alignment: const Alignment(-0.95, -0.9),
                           child: IconButton(
-                            onPressed: () {
-                              Modular.to.pushReplacementNamed('/');
-                            },
+                            onPressed: Modular.to.pop,
                             icon: const Icon(
                               Icons.arrow_back_sharp,
-                              color: SweetPetColors.primary800,
+                              color: SweetPetColors.primary,
                               size: 30,
                             ),
                           ),
@@ -88,9 +95,10 @@ class CadastroDeUsuarioPageState
                         Align(
                           alignment: const Alignment(0, -0.88),
                           child: Text(
-                            'Cadastro',
+                            FlutterI18n.translate(
+                                context, 'telaCadastroUsuario.cadastro'),
                             style: GoogleFonts.sriracha(
-                              color: SweetPetColors.primary800,
+                              color: SweetPetColors.primary,
                               fontSize:
                                   getValueFont(context: context, valueMin: 24),
                             ),
@@ -98,9 +106,9 @@ class CadastroDeUsuarioPageState
                         ),
                         Padding(
                           padding: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height * .14,
-                              left: MediaQuery.of(context).size.width * .05,
-                              right: MediaQuery.of(context).size.width * .05),
+                              top: MediaQuery.of(context).size.height * .12,
+                              left: MediaQuery.of(context).size.width * .065,
+                              right: MediaQuery.of(context).size.width * .065),
                           child: SingleChildScrollView(
                             child: Column(
                               children: <Widget>[
@@ -108,9 +116,38 @@ class CadastroDeUsuarioPageState
                                   child: Observer(
                                     builder: (_) {
                                       return TextFieldWithValidationWidget(
+                                        controller: cnpjController,
+                                        focusNode: store.focusCnpj,
+                                        textInputType: TextInputType.number,
+                                        textInputFormatter: maskFormatterCNPJ,
+                                        placeholder: FlutterI18n.translate(
+                                            context,
+                                            'telaCadastroUsuario.cnpj'),
+                                        onChanged: (newCnpj) {
+                                          store.setCnpj(newCnpj);
+                                          store.cnpjValidate(context);
+                                        },
+                                        textInputAction: TextInputAction.next,
+                                        messageError: store.messageCnpjError,
+                                        onValidator: () =>
+                                            store.cnpjValidate(context),
+                                        onEditingComplete: () =>
+                                            FocusScope.of(context)
+                                                .requestFocus(store.focusName),
+                                        isPassword: false,
+                                      );
+                                    },
+                                  ),
+                                ),
+                                PaddingWithObserverWidget(
+                                  child: Observer(
+                                    builder: (_) {
+                                      return TextFieldWithValidationWidget(
                                         controller: nameController,
                                         focusNode: store.focusName,
-                                        placeholder: 'Nome',
+                                        placeholder: FlutterI18n.translate(
+                                            context,
+                                            'telaCadastroUsuario.nome'),
                                         onChanged: (newName) {
                                           store.setName(newName);
                                           store.nameValidate(context);
@@ -133,7 +170,9 @@ class CadastroDeUsuarioPageState
                                       return TextFieldWithValidationWidget(
                                         controller: emailController,
                                         focusNode: store.focusEmail,
-                                        placeholder: 'Email',
+                                        placeholder: FlutterI18n.translate(
+                                            context,
+                                            'telaCadastroUsuario.email'),
                                         onChanged: (newEmail) {
                                           store.setEmail(newEmail);
                                           store.emailValidate(context);
@@ -156,7 +195,9 @@ class CadastroDeUsuarioPageState
                                       return TextFieldWithValidationWidget(
                                         controller: emailConfirmationController,
                                         focusNode: store.focusEmailConfirmation,
-                                        placeholder: 'Confirmacao de Email',
+                                        placeholder: FlutterI18n.translate(
+                                            context,
+                                            'telaCadastroUsuario.confirmacaoEmail'),
                                         onChanged: (newEmailConfirmation) {
                                           store.setEmailConfirmation(
                                               newEmailConfirmation);
@@ -168,6 +209,32 @@ class CadastroDeUsuarioPageState
                                             store.messageEmailConfirmationError,
                                         onValidator: () => store
                                             .emailConfirmationValidate(context),
+                                        onEditingComplete: () =>
+                                            FocusScope.of(context)
+                                                .requestFocus(store.focusCpf),
+                                        isPassword: false,
+                                      );
+                                    },
+                                  ),
+                                ),
+                                PaddingWithObserverWidget(
+                                  child: Observer(
+                                    builder: (_) {
+                                      return TextFieldWithValidationWidget(
+                                        controller: cpfController,
+                                        focusNode: store.focusCpf,
+                                        textInputType: TextInputType.number,
+                                        textInputFormatter: maskFormatterCPF,
+                                        placeholder: FlutterI18n.translate(
+                                            context, 'telaCadastroUsuario.cpf'),
+                                        onChanged: (newCpf) {
+                                          store.setCpf(newCpf);
+                                          store.cpfValidate(context);
+                                        },
+                                        textInputAction: TextInputAction.next,
+                                        messageError: store.messageCpfError,
+                                        onValidator: () =>
+                                            store.cpfValidate(context),
                                         onEditingComplete: () =>
                                             FocusScope.of(context).requestFocus(
                                                 store.focusPassword),
@@ -182,7 +249,9 @@ class CadastroDeUsuarioPageState
                                       return TextFieldWithValidationWidget(
                                         controller: passwordController,
                                         focusNode: store.focusPassword,
-                                        placeholder: 'Senha',
+                                        placeholder: FlutterI18n.translate(
+                                            context,
+                                            'telaCadastroUsuario.senha'),
                                         onChanged: (newPassword) {
                                           store.setPassword(newPassword);
                                           store.passwordValidate(context);
@@ -209,93 +278,24 @@ class CadastroDeUsuarioPageState
                                             passwordControllerConfirmation,
                                         focusNode:
                                             store.focusPasswordConfirmation,
-                                        placeholder: 'Confirmacao de Senha',
+                                        placeholder: FlutterI18n.translate(
+                                            context,
+                                            'telaCadastroUsuario.confirmacaoSenha'),
                                         onChanged: (newPasswordConfirmation) {
                                           store.setPasswordConfirmation(
                                               newPasswordConfirmation);
                                           store.passwordConfirmationValidate(
                                               context);
                                         },
-                                        textInputAction: store.intETypeUser == 1
-                                            ? TextInputAction.done
-                                            : TextInputAction.next,
+                                        textInputAction: TextInputAction.done,
                                         messageError: store
                                             .messagePasswordConfirmationError,
                                         onValidator: () =>
                                             store.passwordConfirmationValidate(
                                                 context),
-                                        onEditingComplete: store.intETypeUser ==
-                                                1
-                                            ? () => store.autenticate(context)
-                                            : () => FocusScope.of(context)
-                                                .requestFocus(store
-                                                    .focusPasswordConfirmation),
+                                        onEditingComplete: () =>
+                                            FocusScope.of(context).dispose(),
                                         isPassword: true,
-                                      );
-                                    },
-                                  ),
-                                ),
-                                PaddingWithObserverWidget(
-                                  top: 0,
-                                  left: MediaQuery.of(context).size.width * .15,
-                                  right:
-                                      MediaQuery.of(context).size.width * .15,
-                                  bottom: 0,
-                                  child: Observer(
-                                    builder: (_) {
-                                      return Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              const Text(
-                                                'Usuário',
-                                                style: TextStyle(
-                                                    color: SweetPetColors
-                                                        .primary800),
-                                              ),
-                                              Radio(
-                                                value: 1,
-                                                fillColor:
-                                                    MaterialStateProperty.all(
-                                                        store.intETypeUser == 1
-                                                            ? SweetPetColors
-                                                                .yellow
-                                                            : SweetPetColors
-                                                                .grey500),
-                                                groupValue: store.intETypeUser,
-                                                onChanged: (v) {
-                                                  store.setUserOrCRMV(v as int);
-                                                },
-                                              )
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              const Text(
-                                                'Veterinário',
-                                                style: TextStyle(
-                                                    color: SweetPetColors
-                                                        .primary800),
-                                              ),
-                                              Radio(
-                                                value: 2,
-                                                fillColor:
-                                                    MaterialStateProperty.all(
-                                                        store.intETypeUser == 2
-                                                            ? SweetPetColors
-                                                                .yellow
-                                                            : SweetPetColors
-                                                                .grey500),
-                                                groupValue: store.intETypeUser,
-                                                onChanged: (v) {
-                                                  store.setUserOrCRMV(v as int);
-                                                },
-                                              )
-                                            ],
-                                          ),
-                                        ],
                                       );
                                     },
                                   ),
@@ -303,8 +303,8 @@ class CadastroDeUsuarioPageState
                                 Padding(
                                   padding: EdgeInsets.only(
                                     bottom:
-                                        MediaQuery.of(context).size.width * .05,
-                                    top: MediaQuery.of(context).size.width * .1,
+                                        MediaQuery.of(context).size.width * .04,
+                                    top: MediaQuery.of(context).size.width * .02,
                                   ),
                                   child: InkWell(
                                     onTap: () {
@@ -324,7 +324,9 @@ class CadastroDeUsuarioPageState
                                       ),
                                       child: Center(
                                         child: Text(
-                                          'Cadastrar'.toUpperCase(),
+                                          FlutterI18n.translate(
+                                              context,
+                                              'telaCadastroUsuario.cadastrar').toUpperCase(),
                                           style: GoogleFonts.capriola(
                                             color: SweetPetColors.white,
                                             fontWeight: FontWeight.bold,
@@ -334,16 +336,10 @@ class CadastroDeUsuarioPageState
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    bottom:
-                                        MediaQuery.of(context).size.height * .1,
-                                  ),
-                                  child: Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: SvgPicture.asset(
-                                      IconConstant.iconLogoTextSvg,
-                                    ),
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: SvgPicture.asset(
+                                    IconConstant.logoColor,
                                   ),
                                 )
                               ],
@@ -364,8 +360,10 @@ class CadastroDeUsuarioPageState
                   },
                 ),
               ],
-            )
-          : const NoConnectionWidget();
+            );
+      } else {
+        return const NoConnectionWidget();
+      }
     });
   }
 }

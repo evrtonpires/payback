@@ -12,15 +12,30 @@ class LoginStore = LoginStoreBase with _$LoginStore;
 abstract class LoginStoreBase with Store {
   //----------------------------------------------------------------------------
   LoginStoreBase({this.authController}) {
+    focusCnpj = FocusNode();
     focusLogin = FocusNode();
     focusPassword = FocusNode();
   }
 
   final AuthController? authController;
+  late final FocusNode focusCnpj;
   late final FocusNode focusLogin;
   late final FocusNode focusPassword;
 
   //----------------------------------------------------------------------------
+  @observable
+  String? cnpj;
+
+  //----------------------------------------------------------------------------
+  @action
+  void setCnpj(String newCnpj) => cnpj = newCnpj;
+
+  //----------------------------------------------------------------------------
+  @observable
+  String? messageCnpjError;
+
+  //----------------------------------------------------------------------------
+
   @observable
   String? user;
 
@@ -53,12 +68,38 @@ abstract class LoginStoreBase with Store {
   bool keepConnected = true;
 
   //----------------------------------------------------------------------------
+  bool cnpjValidate(BuildContext context, {bool requestFocus = false}) {
+    messageCnpjError = null;
+    if (cnpj == null || cnpj!.isEmpty) {
+      messageCnpjError = 'Campo obrigatório';
+      if (requestFocus) {
+        focusCnpj.requestFocus();
+      }
+      return false;
+    }
+    return true;
+  }
+
+  //----------------------------------------------------------------------------
   bool loginValidate(BuildContext context, {bool requestFocus = false}) {
     messageLoginError = null;
     if (user == null || user!.isEmpty) {
       messageLoginError = 'Campo obrigatório';
       if (requestFocus) {
         focusLogin.requestFocus();
+      }
+      return false;
+    }
+    return true;
+  }
+
+  //----------------------------------------------------------------------------
+  bool passwordValidate(BuildContext context, {bool requestFocus = false}) {
+    messagePasswordError = null;
+    if (password == null || password!.isEmpty) {
+      messagePasswordError = 'Campo obrigatório';
+      if (requestFocus) {
+        focusPassword.requestFocus();
       }
       return false;
     }
@@ -90,19 +131,7 @@ abstract class LoginStoreBase with Store {
   }
 
   //----------------------------------------------------------------------------
-  bool passwordValidate(BuildContext context, {bool requestFocus = false}) {
-    messagePasswordError = null;
-    if (password == null || password!.isEmpty) {
-      messagePasswordError = 'Campo obrigatório';
-      if (requestFocus) {
-        focusPassword.requestFocus();
-      }
-      return false;
-    }
-    return true;
-  }
 
-  //----------------------------------------------------------------------------
   @action
   Future<void> autenticate(BuildContext context) async {
     if (!loginValidate(context, requestFocus: true)) {
