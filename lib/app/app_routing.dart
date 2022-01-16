@@ -29,13 +29,13 @@ extension AppouteNamedExtension on AppRouteNamed {
   String? get _path {
     switch (this) {
       case AppRouteNamed.login:
-        return '/login';
+        return '/login/';
       case AppRouteNamed.home:
-        return '/home';
+        return '/home/';
       case AppRouteNamed.signUp:
-        return '/signup';
+        return '/signup/';
       case AppRouteNamed.recoveryPassword:
-        return '/recoveryPassword';
+        return '/recoveryPassword/';
       default:
         return null;
     }

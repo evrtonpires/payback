@@ -85,7 +85,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                               child: SvgPicture.asset(
                                 IconConstant.logoColor,
                                 height:
-                                    MediaQuery.of(context).size.height * .14,
+                                    MediaQuery.of(context).size.height * .2,
                               ),
                             ),
                           ],
@@ -219,7 +219,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                                                 onValidator: () => store
                                                     .passwordValidate(context),
                                                 onEditingComplete: () => FocusScope.of(context)
-                                                    .dispose(),
+                                                    .nextFocus(),
                                                 isPassword: true,
                                               );
                                             },
@@ -270,7 +270,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                                           MediaQuery.of(context).size.width *
                                               .0,
                                       top: MediaQuery.of(context).size.width *
-                                          .2,
+                                          .1,
                                     ),
                                     child: InkWell(
                                       onTap: () {
@@ -284,7 +284,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                                         decoration: BoxDecoration(
                                           gradient: LinearGradient(
                                               colors: SweetPetColors
-                                                  .linearGradientButton),
+                                                  .linearGradient),
                                           borderRadius: const BorderRadius.all(
                                             Radius.circular(50),
                                           ),

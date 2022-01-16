@@ -294,7 +294,7 @@ class CadastroDeUsuarioPageState
                                             store.passwordConfirmationValidate(
                                                 context),
                                         onEditingComplete: () =>
-                                            FocusScope.of(context).dispose(),
+                                            FocusScope.of(context).nextFocus(),
                                         isPassword: true,
                                       );
                                     },
@@ -317,7 +317,7 @@ class CadastroDeUsuarioPageState
                                       decoration: BoxDecoration(
                                         gradient: LinearGradient(
                                             colors: SweetPetColors
-                                                .linearGradientButton),
+                                                .linearGradient),
                                         borderRadius: const BorderRadius.all(
                                           Radius.circular(50),
                                         ),

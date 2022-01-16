@@ -221,7 +221,7 @@ class RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
                                                     .codeValidate(context),
                                                 onEditingComplete: () =>
                                                     FocusScope.of(context)
-                                                        .dispose(),
+                                                        .nextFocus(),
                                                 isPassword: false,
                                               );
                                             },
@@ -269,7 +269,7 @@ class RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
                                         colors: SweetPetColors
-                                            .linearGradientButton),
+                                            .linearGradient),
                                     borderRadius: const BorderRadius.all(
                                       Radius.circular(50),
                                     ),
