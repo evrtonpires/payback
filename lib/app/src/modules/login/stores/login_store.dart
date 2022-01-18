@@ -116,6 +116,9 @@ abstract class LoginStoreBase with Store {
   @action
   Future<void> autenticate(
       BuildContext context, String title, String text) async {
+    if (!cnpjValidate(context, requestFocus: true)) {
+      return;
+    }
     if (!loginValidate(context, requestFocus: true)) {
       return;
     }
