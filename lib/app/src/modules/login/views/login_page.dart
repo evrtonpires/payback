@@ -245,6 +245,11 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                                                       .recoveryPassword
                                                       .fullPath!,
                                                   isReplacement: false,
+                                                  title: FlutterI18n.translate(
+                                                      context, 'global.aviso'),
+                                                  text: FlutterI18n.translate(
+                                                      context,
+                                                      'telaLogin.esqueceuSenhaSemConexao'),
                                                 ),
                                               ),
                                             ),
@@ -273,7 +278,13 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                                     ),
                                     child: InkWell(
                                       onTap: () {
-                                        store.autenticate(context);
+                                        store.autenticate(
+                                          context,
+                                          FlutterI18n.translate(
+                                              context, 'global.aviso'),
+                                          FlutterI18n.translate(context,
+                                              'telaLogin.entrarSemConexao'),
+                                        );
                                       },
                                       child: Container(
                                         height: 45,
@@ -320,16 +331,22 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                                           context: context,
                                           rout: AppRouteNamed.signUp.fullPath!,
                                           isReplacement: false,
+                                          title: FlutterI18n.translate(
+                                              context, 'global.aviso'),
+                                          text: FlutterI18n.translate(context,
+                                              'telaLogin.cadastrarSemConexao'),
                                         );
                                       },
                                       child: Text(
                                         FlutterI18n.translate(
                                             context, 'telaLogin.cadastrar'),
                                         style: TextStyle(
-                                            color: SweetPetColors.primary,
-                                            fontSize: getValueFont(
-                                                context: context,
-                                                valueMin: 16)),
+                                          color: SweetPetColors.primary,
+                                          fontSize: getValueFont(
+                                            context: context,
+                                            valueMin: 16,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),

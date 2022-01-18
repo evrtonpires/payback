@@ -22,5 +22,6 @@ Map<String, dynamic> _$SignUpFormularyModelToJson(
       'name': instance.name,
       'email': instance.email,
       'password': instance.password,
+      'cnpj': instance.cnpj,
       'type': instance.type,
     };

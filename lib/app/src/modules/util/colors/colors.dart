@@ -13,7 +13,7 @@ abstract class SweetPetColors {
 
   //----------------------------------------------------------------------------
   static const Color grey900 = Color(0xFF212121);
-  static const Color grey800 = Color(0xF424242);
+  static const Color grey800 = Color(0xFF424242);
   static const Color grey700 = Color(0xFF616161);
   static const Color grey600 = Color(0xFF757575);
   static const Color grey500 = Color(0xFF9E9E9E);
@@ -25,9 +25,9 @@ abstract class SweetPetColors {
 
   //----------------------------------------------------------------------------
 
-  static const Color PRETOSGS = Color.fromARGB(255, 080, 079, 081);
-  static const Color LARANJASGS = Color.fromARGB(255, 243, 112, 33);
-  static const Color CINZASGS = Color.fromARGB(255, 119, 120, 123);
+  static const Color pretoSGS = Color.fromARGB(255, 080, 079, 081);
+  static const Color laranjaSGS = Color.fromARGB(255, 243, 112, 33);
+  static const Color cinzaSGS = Color.fromARGB(255, 119, 120, 123);
 
   //----------------------------------------------------------------------------
 
