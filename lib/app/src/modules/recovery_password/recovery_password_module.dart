@@ -1,6 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../core/interfaces/recovery_password_repository_interface.dart';
+import 'interfaces/recovery_password_repository_interface.dart';
 import 'repositories/recovery_password_repository.dart';
 import 'controllers/recovery_password_controller.dart';
 import 'recovery_password_routing.dart';

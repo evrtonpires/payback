@@ -17,7 +17,7 @@ enum SignUpRouteNamed {
   signUp,
 }
 
-extension AppouteNamedExtension on SignUpRouteNamed {
+extension AppRouteNamedExtension on SignUpRouteNamed {
   String? get _path {
     switch (this) {
       case SignUpRouteNamed.signUp:

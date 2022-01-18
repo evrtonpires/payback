@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:payback/app/src/app_routing.dart';
 import 'package:payback/app/src/modules/util/colors/colors.dart';
 import 'package:payback/app/src/modules/util/constants/icons_constants.dart';
 import 'package:payback/app/src/modules/util/widgets/size_font.dart';
@@ -15,7 +17,7 @@ class NoConnectionWidget extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: SweetPetColors.linearGradient,
+            colors: ColorsConstants.linearGradient,
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -28,28 +30,32 @@ class NoConnectionWidget extends StatelessWidget {
               alignment: const Alignment(-0.95, -0.9),
               child: IconButton(
                 onPressed: () {
-                  Modular.to.pushReplacementNamed('/');
+                  Modular.to
+                      .pushReplacementNamed(AppRouteNamed.login.fullPath!);
                 },
                 icon: const Icon(
                   Icons.arrow_back_sharp,
-                  color: SweetPetColors.white,
+                  color: ColorsConstants.white,
                   size: 30,
                 ),
               ),
             ),
-            Center(
+            Align(
+              alignment:
+                  Alignment(0, MediaQuery.of(context).size.height * -.0005),
               child: SvgPicture.asset(
                 IconConstant.noConnection,
-                width: MediaQuery.of(context).size.width,
+                width: MediaQuery.of(context).size.width * .85,
               ),
             ),
             Align(
               alignment: const Alignment(0, .25),
               child: Text(
-                'Sem Conexão',
+                FlutterI18n.translate(context, 'global.semConexao'),
+                textAlign: TextAlign.center,
                 style: GoogleFonts.sriracha(
-                  color: SweetPetColors.white,
-                  fontSize: getValueFont(context: context, valueMin: 14),
+                  color: ColorsConstants.white,
+                  fontSize: getValueFont(context: context, valueMin: 20),
                 ),
               ),
             )

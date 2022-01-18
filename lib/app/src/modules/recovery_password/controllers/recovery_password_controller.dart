@@ -1,5 +1,5 @@
 import '../../../app_store.dart';
-import '../../../core/interfaces/recovery_password_repository_interface.dart';
+import '../interfaces/recovery_password_repository_interface.dart';
 
 class RecoveryPasswordController {
   String keySTR = "4Rtv9UH56xWtAyNcS5Yr3jrPmWs26Wa6";

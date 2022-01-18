@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-abstract class SweetPetColors {
+abstract class ColorsConstants {
   static const Color primary = Color(0xFF006699);
   static const Color secundary = Color(0xFF0098C5);
 

@@ -60,7 +60,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
           body: Container(
             height: MediaQuery.of(context).size.height,
             decoration: const BoxDecoration(
-              color: SweetPetColors.white,
+              color: ColorsConstants.white,
             ),
             child: SingleChildScrollView(
               child: Column(
@@ -92,14 +92,11 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                         Expanded(
                           child: Container(
                               padding: EdgeInsets.only(
-                                left: MediaQuery.of(context).size.width *
-                                    .065,
-                                right: MediaQuery.of(context).size.width *
-                                    .065,
+                                left: MediaQuery.of(context).size.width * .065,
+                                right: MediaQuery.of(context).size.width * .065,
                               ),
                               child: Row(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Expanded(
                                     child: Observer(
@@ -108,19 +105,15 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                                           controller: cnpjController,
                                           focusNode: store.focusCnpj,
                                           textInputFormatter: maskFormatter,
-                                          placeholder:
-                                              FlutterI18n.translate(context,
-                                                  'telaLogin.cnpj'),
+                                          placeholder: FlutterI18n.translate(
+                                              context, 'telaLogin.cnpj'),
                                           onChanged: (newCnpj) {
                                             store.setCnpj(newCnpj);
                                             store.cnpjValidate(context);
                                           },
-                                          textInputAction:
-                                              TextInputAction.next,
-                                          textInputType:
-                                              TextInputType.number,
-                                          messageError:
-                                              store.messageCnpjError,
+                                          textInputAction: TextInputAction.next,
+                                          textInputType: TextInputType.number,
+                                          messageError: store.messageCnpjError,
                                           onValidator: () =>
                                               store.cnpjValidate(context),
                                           onEditingComplete: () =>
@@ -137,14 +130,11 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                         Expanded(
                           child: Container(
                               padding: EdgeInsets.only(
-                                left: MediaQuery.of(context).size.width *
-                                    .065,
-                                right: MediaQuery.of(context).size.width *
-                                    .065,
+                                left: MediaQuery.of(context).size.width * .065,
+                                right: MediaQuery.of(context).size.width * .065,
                               ),
                               child: Row(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Expanded(
                                     child: Observer(
@@ -152,17 +142,14 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                                         return TextFieldWithValidationWidget(
                                           controller: loginController,
                                           focusNode: store.focusLogin,
-                                          placeholder:
-                                              FlutterI18n.translate(context,
-                                                  'telaLogin.usuario'),
+                                          placeholder: FlutterI18n.translate(
+                                              context, 'telaLogin.usuario'),
                                           onChanged: (newLogin) {
                                             store.setLogin(newLogin);
                                             store.loginValidate(context);
                                           },
-                                          textInputAction:
-                                              TextInputAction.next,
-                                          messageError:
-                                              store.messageLoginError,
+                                          textInputAction: TextInputAction.next,
+                                          messageError: store.messageLoginError,
                                           onValidator: () =>
                                               store.loginValidate(context),
                                           onEditingComplete: () =>
@@ -179,10 +166,8 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                         Expanded(
                           child: Container(
                             padding: EdgeInsets.only(
-                              left:
-                                  MediaQuery.of(context).size.width * .065,
-                              right:
-                                  MediaQuery.of(context).size.width * .065,
+                              left: MediaQuery.of(context).size.width * .065,
+                              right: MediaQuery.of(context).size.width * .065,
                             ),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,22 +180,18 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                                           return TextFieldWithValidationWidget(
                                             controller: senhaController,
                                             focusNode: store.focusPassword,
-                                            placeholder:
-                                                FlutterI18n.translate(
-                                                    context,
-                                                    'telaLogin.senha'),
+                                            placeholder: FlutterI18n.translate(
+                                                context, 'telaLogin.senha'),
                                             onChanged: (newPassword) {
-                                              store
-                                                  .setPassword(newPassword);
-                                              store.passwordValidate(
-                                                  context);
+                                              store.setPassword(newPassword);
+                                              store.passwordValidate(context);
                                             },
                                             textInputAction:
                                                 TextInputAction.done,
                                             messageError:
                                                 store.messagePasswordError,
-                                            onValidator: () => store
-                                                .passwordValidate(context),
+                                            onValidator: () =>
+                                                store.passwordValidate(context),
                                             onEditingComplete: () =>
                                                 FocusScope.of(context)
                                                     .nextFocus(),
@@ -229,8 +210,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                                               FlutterI18n.translate(context,
                                                   'telaLogin.esqueceuSuaSenha'),
                                               style: const TextStyle(
-                                                color:
-                                                    SweetPetColors.primary,
+                                                color: ColorsConstants.primary,
                                               ),
                                             ),
                                             onTap: () => store
@@ -238,8 +218,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                                                 .checkConnectivityPushNamed(
                                               context: context,
                                               rout: AppRouteNamed
-                                                  .recoveryPassword
-                                                  .fullPath!,
+                                                  .recoveryPassword.fullPath!,
                                               isReplacement: false,
                                               title: FlutterI18n.translate(
                                                   context, 'global.aviso'),
@@ -267,10 +246,8 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                               Padding(
                                 padding: EdgeInsets.only(
                                   bottom:
-                                      MediaQuery.of(context).size.width *
-                                          .0,
-                                  top: MediaQuery.of(context).size.width *
-                                      .1,
+                                      MediaQuery.of(context).size.width * .0,
+                                  top: MediaQuery.of(context).size.width * .1,
                                 ),
                                 child: InkWell(
                                   onTap: () {
@@ -285,12 +262,11 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                                   child: Container(
                                     height: 45,
                                     width:
-                                        MediaQuery.of(context).size.width /
-                                            1.2,
+                                        MediaQuery.of(context).size.width / 1.2,
                                     decoration: BoxDecoration(
                                       gradient: LinearGradient(
-                                          colors: SweetPetColors
-                                              .linearGradient),
+                                          colors:
+                                              ColorsConstants.linearGradient),
                                       borderRadius: const BorderRadius.all(
                                         Radius.circular(50),
                                       ),
@@ -301,7 +277,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                                                 context, 'telaLogin.entrar')
                                             .toUpperCase(),
                                         style: const TextStyle(
-                                          color: SweetPetColors.white,
+                                          color: ColorsConstants.white,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -315,7 +291,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                                   FlutterI18n.translate(
                                       context, 'telaLogin.ou'),
                                   style: const TextStyle(
-                                      color: SweetPetColors.neutralGray),
+                                      color: ColorsConstants.neutralGray),
                                 ),
                               ),
                               const SizedBox(height: 10),
@@ -337,7 +313,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                                     FlutterI18n.translate(
                                         context, 'telaLogin.cadastrar'),
                                     style: TextStyle(
-                                      color: SweetPetColors.primary,
+                                      color: ColorsConstants.primary,
                                       fontSize: getValueFont(
                                         context: context,
                                         valueMin: 16,

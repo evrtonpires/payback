@@ -16,26 +16,26 @@ class BasicDateField extends StatelessWidget {
         contentPadding:
             const EdgeInsets.only(top: 0, left: 10, right: 10, bottom: 0),
         alignLabelWithHint: true,
-        hintStyle: const TextStyle(color: SweetPetColors.primary),
+        hintStyle: const TextStyle(color: ColorsConstants.primary),
         labelText: 'Data de Nascimento',
-        labelStyle: const TextStyle(color: SweetPetColors.primary),
+        labelStyle: const TextStyle(color: ColorsConstants.primary),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(
-            color: SweetPetColors.primary,
+            color: ColorsConstants.primary,
             width: .5,
           ),
           borderRadius: BorderRadius.circular(10.0),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: const BorderSide(
-            color: SweetPetColors.primary,
+            color: ColorsConstants.primary,
             width: .5,
           ),
           borderRadius: BorderRadius.circular(10.0),
         ),
         border: OutlineInputBorder(
           borderSide: const BorderSide(
-            color: SweetPetColors.primary,
+            color: ColorsConstants.primary,
             width: .5,
           ),
           borderRadius: BorderRadius.circular(

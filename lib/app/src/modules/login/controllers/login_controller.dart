@@ -2,7 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../../core/interfaces/login_repository_interface.dart';
+import '../interfaces/login_repository_interface.dart';
 import '../../../core/models/login_response_model.dart';
 import '../models/login_formulary_model.dart';
 import '../../util/alert_awesome/alert_awesome_widget.dart';

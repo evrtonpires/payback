@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
-import '../../../core/interfaces/sign_up_repository_interface.dart';
+import '../interfaces/sign_up_repository_interface.dart';
 import '../models/sign_up_formulary_model.dart';
 import '../../../core/models/login_response_model.dart';
 import '../../util/alert_awesome/alert_awesome_widget.dart';

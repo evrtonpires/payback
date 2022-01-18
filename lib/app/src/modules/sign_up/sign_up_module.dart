@@ -1,5 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:payback/app/src/core/interfaces/sign_up_repository_interface.dart';
+import 'package:payback/app/src/modules/sign_up/interfaces/sign_up_repository_interface.dart';
 import 'package:payback/app/src/modules/sign_up/controllers/sign_up_controller.dart';
 import 'package:payback/app/src/modules/sign_up/repositories/sign_up_repository.dart';
 

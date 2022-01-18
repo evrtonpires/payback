@@ -55,7 +55,7 @@ class TextFieldWithValidationWidget extends StatelessWidget {
         children: [
           const Icon(
             Icons.error_outline,
-            color: SweetPetColors.white,
+            color: ColorsConstants.white,
             size: 15,
           ),
           const SizedBox(

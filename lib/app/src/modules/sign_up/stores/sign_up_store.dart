@@ -286,7 +286,8 @@ abstract class _SignUpStoreBase with Store {
 
 //----------------------------------------------------------------------------
   @action
-  Future<void> autenticate(BuildContext context,String title, String text) async {
+  Future<void> autenticate(
+      BuildContext context, String title, String text) async {
     if (!cnpjValidate(context, requestFocus: true)) {
       return;
     }

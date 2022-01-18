@@ -1,5 +1,5 @@
-import '../models/login_response_model.dart';
-import '../../modules/login/models/login_formulary_model.dart';
+import '../../../core/models/login_response_model.dart';
+import '../models/login_formulary_model.dart';
 
 abstract class ILoginRepository {
   Future<LoginResponseModel?> getLogin({

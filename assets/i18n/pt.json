@@ -1,6 +1,12 @@
 {
   "global": {
-    "aviso": "Aviso"
+    "aviso": "Aviso",
+    "semConexao" : "Ops\nVerifique sua conexão com a internet e tente novamente."
+  },
+  "telaHome": {
+    "remedios": "Remédios",
+    "receitas" : "Receitas",
+    "pontos" : "Pontos"
   },
   "telaLogin": {
     "cnpj": "CNPJ",

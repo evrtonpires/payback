@@ -28,7 +28,7 @@ class AppRouting {
 
 enum AppRouteNamed { login, home, signUp, recoveryPassword }
 
-extension AppouteNamedExtension on AppRouteNamed {
+extension AppRouteNamedExtension on AppRouteNamed {
   String? get _path {
     switch (this) {
       case AppRouteNamed.login:

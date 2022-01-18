@@ -31,7 +31,7 @@ class _LoadingPageWidgetState extends State<LoadingPageWidget> {
                       children: <Widget>[
                         SvgPicture.asset(
                           IconConstant.logoColor,
-                          color: SweetPetColors.secundary,
+                          color: ColorsConstants.secundary,
                           width: 60.0,
                           height: 60.0,
                         ),
@@ -40,7 +40,7 @@ class _LoadingPageWidgetState extends State<LoadingPageWidget> {
                           'Entrando. Aguarde ...',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: SweetPetColors.white),
+                              color: ColorsConstants.white),
                         )
                       ],
                     )

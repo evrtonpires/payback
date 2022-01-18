@@ -1,28 +1,29 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:payback/app/src/modules/home/home_routing.dart';
 import 'package:payback/app/src/modules/recovery_password/views/recovery_password_page.dart';
 
 import '../../app_routing.dart';
 
-class RecoveryPasswordRouting {
+class RemedyRouting {
   static final List<ModularRoute> routes = [
     ChildRoute(
-      RecoveryPasswordRouteNamed.recoveryPassword._path!,
+      RemedyRouteNamed.remedy._path!,
       child: (_, args) => const RecoveryPasswordPage(),
     ),
   ];
 }
 
-enum RecoveryPasswordRouteNamed { recoveryPassword }
+enum RemedyRouteNamed { remedy }
 
-extension AppRouteNamedExtension on RecoveryPasswordRouteNamed {
+extension AppRouteNamedExtension on RemedyRouteNamed {
   String? get _path {
     switch (this) {
-      case RecoveryPasswordRouteNamed.recoveryPassword:
+      case RemedyRouteNamed.remedy:
         return '/';
       default:
         return null;
     }
   }
 
-  String? get fullPath => AppRouteNamed.recoveryPassword.fullPath! + _path!;
+  String? get fullPath => HomeRouteNamed.remedy.fullPath! + _path!;
 }

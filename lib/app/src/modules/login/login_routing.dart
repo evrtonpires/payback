@@ -16,7 +16,7 @@ enum LoginRouteNamed {
   login,
 }
 
-extension AppouteNamedExtension on LoginRouteNamed {
+extension AppRouteNamedExtension on LoginRouteNamed {
   String? get _path {
     switch (this) {
       case LoginRouteNamed.login:

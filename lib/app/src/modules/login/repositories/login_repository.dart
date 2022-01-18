@@ -6,7 +6,7 @@ import '../../../core/models/login_response_model.dart';
 import '../../../core/routes/api.routes.dart';
 import '../models/login_formulary_model.dart';
 import '../../util/alert_awesome/alert_awesome_widget.dart';
-import '../../../core/interfaces/login_repository_interface.dart';
+import '../interfaces/login_repository_interface.dart';
 import '../../../core/interfaces/api.interface.dart';
 
 class LoginRepository implements ILoginRepository {
@@ -21,14 +21,11 @@ class LoginRepository implements ILoginRepository {
     context,
   }) async {
     try {
-      ApiResponseModel response = await _api
-          .call(
-        type: EApiType.post,
-        url: ApiRoutes.authAuthenticate,
-        data: loginFormulary.toJson(),
-        headers: {'Content-Type' : 'application/json'}
-      )
-          .catchError((e) {
+      ApiResponseModel response = await _api.call(
+          type: EApiType.post,
+          url: ApiRoutes.authAuthenticate,
+          data: loginFormulary.toJson(),
+          headers: {'Content-Type': 'application/json'}).catchError((e) {
         awesomeDialogWidget(
             context: context,
             animType: AnimType.SCALE,
@@ -42,7 +39,7 @@ class LoginRepository implements ILoginRepository {
 
       if (response.statusCode == 200) {
         return LoginResponseModel.fromJson(response.data);
-      }else{
+      } else {
         awesomeDialogWidget(
             context: context,
             animType: AnimType.SCALE,

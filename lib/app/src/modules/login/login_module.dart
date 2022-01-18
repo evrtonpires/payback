@@ -1,5 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:payback/app/src/core/interfaces/login_repository_interface.dart';
+import 'package:payback/app/src/modules/login/interfaces/login_repository_interface.dart';
 import 'package:payback/app/src/modules/login/repositories/login_repository.dart';
 
 import 'controllers/login_controller.dart';

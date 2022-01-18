@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/models/api_response.model.dart';
 import '../../../core/routes/api.routes.dart';
-import '../../../core/interfaces/recovery_password_repository_interface.dart';
+import '../interfaces/recovery_password_repository_interface.dart';
 import '../../util/alert_awesome/alert_awesome_widget.dart';
 import '../../../core/interfaces/api.interface.dart';
 

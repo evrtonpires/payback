@@ -73,7 +73,7 @@ class SignUpPageState extends ModularState<SignUpPage, SignUpStore> {
               body: Container(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
-                color: SweetPetColors.white,
+                color: ColorsConstants.white,
                 child: Stack(
                   children: [
                     Align(
@@ -82,7 +82,7 @@ class SignUpPageState extends ModularState<SignUpPage, SignUpStore> {
                         onPressed: Modular.to.pop,
                         icon: const Icon(
                           Icons.arrow_back_sharp,
-                          color: SweetPetColors.primary,
+                          color: ColorsConstants.primary,
                           size: 30,
                         ),
                       ),
@@ -93,7 +93,7 @@ class SignUpPageState extends ModularState<SignUpPage, SignUpStore> {
                         FlutterI18n.translate(
                             context, 'telaCadastroUsuario.cadastro'),
                         style: GoogleFonts.sriracha(
-                          color: SweetPetColors.primary,
+                          color: ColorsConstants.primary,
                           fontSize:
                               getValueFont(context: context, valueMin: 24),
                         ),
@@ -304,7 +304,7 @@ class SignUpPageState extends ModularState<SignUpPage, SignUpStore> {
                                       MediaQuery.of(context).size.width / 1.2,
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
-                                        colors: SweetPetColors.linearGradient),
+                                        colors: ColorsConstants.linearGradient),
                                     borderRadius: const BorderRadius.all(
                                       Radius.circular(50),
                                     ),
@@ -315,7 +315,7 @@ class SignUpPageState extends ModularState<SignUpPage, SignUpStore> {
                                               'telaCadastroUsuario.cadastrar')
                                           .toUpperCase(),
                                       style: GoogleFonts.capriola(
-                                        color: SweetPetColors.white,
+                                        color: ColorsConstants.white,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),

@@ -130,26 +130,26 @@ abstract class LoginStoreBase with Store {
         messageCnpjError == null &&
         !isLoading) {
       isLoading = true;
-      LoginResponseModel? loginResponse = await loginController.signIn(
-        loginFormulary: LoginFormularyModel(
-            login: user!.trim(),
-            password: password!.trim(),
-            cnpj: cnpj!.trim()),
+      // LoginResponseModel? loginResponse = await loginController.signIn(
+      //   loginFormulary: LoginFormularyModel(
+      //       login: user!.trim(),
+      //       password: password!.trim(),
+      //       cnpj: cnpj!.trim()),
+      //   context: context,
+      // );
+      // if (loginResponse != null) {
+      isLoading = false;
+      //   appStore.userModel = loginResponse.user;
+      appStore.checkConnectivityPushNamed(
         context: context,
+        rout: AppRouteNamed.home.fullPath!,
+        isReplacement: true,
+        title: title,
+        text: text,
       );
-      if (loginResponse != null) {
-        isLoading = false;
-        appStore.userModel = loginResponse.user;
-        appStore.checkConnectivityPushNamed(
-          context: context,
-          rout: AppRouteNamed.home.fullPath!,
-          isReplacement: false,
-          title: title,
-          text: text,
-        );
-      } else {
-        isLoading = false;
-      }
+      // } else {
+      //   isLoading = false;
+      // }
     }
   }
 }
