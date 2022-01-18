@@ -1,4 +1,7 @@
 {
+  "global": {
+    "aviso": "Aviso"
+  },
   "telaLogin": {
     "cnpj": "CNPJ",
     "usuario": "Usuário",
@@ -6,7 +9,10 @@
     "esqueceuSuaSenha": "Esqueceu sua senha ?",
     "entrar": "Entrar",
     "ou": "ou",
-    "cadastrar": "Cadastre-se"
+    "cadastrar": "Cadastre-se",
+    "entrarSemConexao" : "É necessario estar conectado a internet.",
+    "cadastrarSemConexao" : "É necessario estar conectado a internet para realizar o cadrastro.",
+    "esqueceuSenhaSemConexao" : "É necessario estar conectado a internet para realizar o cadrastro."
   },
   "telaRecoveryPassword": {
     "email": "Email",
@@ -27,6 +33,7 @@
     "confirmacaoEmail": "Confirmação de Email",
     "senha": "Senha",
     "confirmacaoSenha": "Confirmação de Senha",
-    "cadastrar": "Cadastrar"
+    "cadastrar": "Cadastrar",
+    "cadastrarSemConexao" : "É necessario estar conectado a internet para realizar o cadrastro."
   }
 }

@@ -135,8 +135,9 @@ mixin _$LoginStore on LoginStoreBase, Store {
   final _$autenticateAsyncAction = AsyncAction('LoginStoreBase.autenticate');
 
   @override
-  Future<void> autenticate(BuildContext context) {
-    return _$autenticateAsyncAction.run(() => super.autenticate(context));
+  Future<void> autenticate(BuildContext context, String title, String text) {
+    return _$autenticateAsyncAction
+        .run(() => super.autenticate(context, title, text));
   }
 
   final _$LoginStoreBaseActionController =

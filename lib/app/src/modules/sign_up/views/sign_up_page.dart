@@ -290,7 +290,13 @@ class SignUpPageState extends ModularState<SignUpPage, SignUpStore> {
                               ),
                               child: InkWell(
                                 onTap: () {
-                                  store.autenticate(context);
+                                  store.autenticate(
+                                    context,
+                                    FlutterI18n.translate(
+                                        context, 'global.aviso'),
+                                    FlutterI18n.translate(context,
+                                        'telaCadastroUsuario.cadastrarSemConexao'),
+                                  );
                                 },
                                 child: Container(
                                   height: 45,

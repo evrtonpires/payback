@@ -7,7 +7,10 @@ import 'modules/recovery_password/recovery_password_module.dart';
 
 class AppRouting {
   static final List<ModularRoute> routes = [
-    ModuleRoute(AppRouteNamed.login._path!, module: LoginModule()),
+    ModuleRoute(
+      AppRouteNamed.login._path!,
+      module: LoginModule(),
+    ),
     ModuleRoute(
       AppRouteNamed.home._path!,
       module: HomeModule(),

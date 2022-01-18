@@ -39,7 +39,11 @@ abstract class _AppStoreBase with Store {
   //----------------------------------------------------------------------------
 
   Future<void> checkConnectivityPushNamed(
-      {context, required String rout, bool isReplacement = true}) async {
+      {context,
+      required String rout,
+      bool isReplacement = true,
+      required String title,
+      required String text}) async {
     var connectivityResult = await checkConnectivity();
     if (connectivityResult) {
       if (isReplacement) {
@@ -52,9 +56,8 @@ abstract class _AppStoreBase with Store {
           context: context,
           animType: AnimType.SCALE,
           dialogType: DialogType.NO_HEADER,
-          title: 'Aviso',
-          text:
-              'É necessario estar conectado a internet para realizar o cadrastro.',
+          title: title,
+          text: text,
           borderColor: Colors.yellow,
           buttonColor: Colors.yellow.shade800,
           btnOkOnPress: () {});

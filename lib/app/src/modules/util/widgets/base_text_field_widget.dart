@@ -138,7 +138,7 @@ class _BaseTextFieldWidgetState extends State<BaseTextFieldWidget> {
   Widget build(BuildContext context) {
     return Theme(
       data: ThemeData(
-        primaryColor: SweetPetColors.LARANJASGS,
+        primaryColor: SweetPetColors.laranjaSGS,
       ),
       child: Container(
         decoration: BoxDecoration(
