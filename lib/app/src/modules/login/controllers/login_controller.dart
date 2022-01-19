@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 
 import 'package:flutter/material.dart';
 import 'package:payback/app/src/core/models/api_response.model.dart';
+import 'package:payback/app/src/modules/util/colors/colors.dart';
 
 import '../interfaces/login_repository_interface.dart';
 import '../../../core/models/login_response_model.dart';
@@ -56,8 +57,12 @@ class LoginController {
                 dialogType: DialogType.NO_HEADER,
                 text: apiResponseModel.data['messages'][0]['message'],
                 title: apiResponseModel.data['title'],
-                borderColor: Colors.red,
-                buttonColor: Colors.red.shade800,
+                borderColor: apiResponseModel.statusCode == 401
+                    ? ColorsConstants.yellow
+                    : Colors.red,
+                buttonColor: apiResponseModel.statusCode == 401
+                    ? ColorsConstants.orangeLight
+                    : Colors.red.shade800,
                 btnOkOnPress: () {});
           }
         } else {

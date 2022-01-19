@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:payback/app/src/modules/home/home_routing.dart';
 
+import '../../../modules/home/home_routing.dart';
 import '../../../modules/util/constants/icons_constants.dart';
 import '../../util/colors/colors.dart';
 import '../stores/home_store.dart';
@@ -83,6 +83,7 @@ class HomePageState extends ModularState<HomePage, HomeStore>
             ),
           ),
           body: RouterOutlet(),
+
         ),
       ),
     );
