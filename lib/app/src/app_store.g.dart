@@ -12,13 +12,13 @@ mixin _$AppStore on _AppStoreBase, Store {
   final _$userModelAtom = Atom(name: '_AppStoreBase.userModel');
 
   @override
-  UserModel get userModel {
+  UserModel? get userModel {
     _$userModelAtom.reportRead();
     return super.userModel;
   }
 
   @override
-  set userModel(UserModel value) {
+  set userModel(UserModel? value) {
     _$userModelAtom.reportWrite(value, super.userModel, () {
       super.userModel = value;
     });

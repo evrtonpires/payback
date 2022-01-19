@@ -1,5 +1,10 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:mobx/mobx.dart';
+import 'package:payback/app/src/core/models/api_response.model.dart';
+import 'package:payback/app/src/modules/util/alert_awesome/alert_awesome_widget.dart';
+import 'dart:async';
 
 import '../../../../../app/src/app_store.dart';
 import '../../../core/models/login_response_model.dart';
@@ -33,7 +38,7 @@ abstract class LoginStoreBase with Store {
 
   //----------------------------------------------------------------------------
   @action
-  void setCnpj(String newCnpj) => cnpj = newCnpj;
+  void setCnpj(String newCnpj) => cnpj = newCnpj.trimRight();
 
   //----------------------------------------------------------------------------
   @observable
@@ -46,7 +51,7 @@ abstract class LoginStoreBase with Store {
 
   //----------------------------------------------------------------------------
   @action
-  void setLogin(String newUser) => user = newUser;
+  void setLogin(String newUser) => user = newUser.trimRight();
 
   //----------------------------------------------------------------------------
   @observable
@@ -58,7 +63,7 @@ abstract class LoginStoreBase with Store {
 
   //----------------------------------------------------------------------------
   @action
-  void setPassword(String newPassword) => password = newPassword;
+  void setPassword(String newPassword) => password = newPassword.trimRight();
 
   //----------------------------------------------------------------------------
   @observable
@@ -112,6 +117,24 @@ abstract class LoginStoreBase with Store {
   }
 
   //----------------------------------------------------------------------------
+  void startTimer(context) {
+    Timer.periodic(const Duration(milliseconds: 500), (Timer t) {
+      awesomeDialogWidget(
+          context: context,
+          animType: AnimType.SCALE,
+          dialogType: DialogType.SUCCES,
+          title: FlutterI18n.translate(context, 'telaCadastroUsuario.sucesso'),
+          text: FlutterI18n.translate(
+              context, 'telaCadastroUsuario.msgConfirmacaoCadastro'),
+          borderColor: Colors.green,
+          buttonColor: Colors.green.shade800,
+          btnOkOnPress: () {});
+
+      t.cancel();
+    });
+  }
+
+  //----------------------------------------------------------------------------
 
   @action
   Future<void> autenticate(
@@ -130,26 +153,27 @@ abstract class LoginStoreBase with Store {
         messageCnpjError == null &&
         !isLoading) {
       isLoading = true;
-      // LoginResponseModel? loginResponse = await loginController.signIn(
-      //   loginFormulary: LoginFormularyModel(
-      //       login: user!.trim(),
-      //       password: password!.trim(),
-      //       cnpj: cnpj!.trim()),
-      //   context: context,
-      // );
-      // if (loginResponse != null) {
-      isLoading = false;
-      //   appStore.userModel = loginResponse.user;
-      appStore.checkConnectivityPushNamed(
+      ApiResponseModel? apiResponseModel = await loginController.signIn(
+        loginFormulary: LoginFormularyModel(
+            login: user!.trim(),
+            password: password!.trim(),
+            cnpj: cnpj!.trim()),
         context: context,
-        rout: AppRouteNamed.home.fullPath!,
-        isReplacement: true,
-        title: title,
-        text: text,
       );
-      // } else {
-      //   isLoading = false;
-      // }
+      if (apiResponseModel != null && apiResponseModel.statusCode == 200) {
+        isLoading = false;
+        appStore.userModel =
+            LoginResponseModel.fromJson(apiResponseModel.data).user;
+        appStore.checkConnectivityPushNamed(
+          context: context,
+          rout: AppRouteNamed.home.fullPath!,
+          isReplacement: true,
+          title: title,
+          text: text,
+        );
+      } else {
+        isLoading = false;
+      }
     }
   }
 }

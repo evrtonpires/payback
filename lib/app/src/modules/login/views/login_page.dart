@@ -15,7 +15,9 @@ import '../../util/widgets/size_font.dart';
 import '../../util/widgets/text_field_with_validation_widget.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key, bool this.sucess = false}) : super(key: key);
+
+  final bool sucess;
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -35,8 +37,8 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
     store.loginController.appStore
         .getUserSharedPref(stringValue: 'cnpjValue')
         .then((value) {
-      store.setLogin(value);
-      cnpjController.text = value;
+      store.setCnpj(value);
+      cnpjController.text = maskFormatter.maskText(value);
     });
     store.loginController.appStore
         .getUserSharedPref(stringValue: 'userValue')
@@ -50,6 +52,9 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
       store.setPassword(value);
       senhaController.text = value;
     });
+    if (widget.sucess) {
+     store.startTimer(context);
+    }
   }
 
   @override

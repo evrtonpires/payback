@@ -118,7 +118,7 @@ class SignUpPageState extends ModularState<SignUpPage, SignUpStore> {
                                     placeholder: FlutterI18n.translate(
                                         context, 'telaCadastroUsuario.cnpj'),
                                     onChanged: (newCnpj) {
-                                      store.setCnpj(newCnpj);
+                                      store.setCnpj(maskFormatterCNPJ.getUnmaskedText());
                                       store.cnpjValidate(context);
                                     },
                                     textInputAction: TextInputAction.next,
@@ -292,10 +292,7 @@ class SignUpPageState extends ModularState<SignUpPage, SignUpStore> {
                                 onTap: () {
                                   store.autenticate(
                                     context,
-                                    FlutterI18n.translate(
-                                        context, 'global.aviso'),
-                                    FlutterI18n.translate(context,
-                                        'telaCadastroUsuario.cadastrarSemConexao'),
+
                                   );
                                 },
                                 child: Container(

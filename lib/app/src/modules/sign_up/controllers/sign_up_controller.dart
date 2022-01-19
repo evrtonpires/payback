@@ -17,35 +17,34 @@ class SignUpController {
   AppStore get appStore => _appStore;
 
   //----------------------------------------------------------------------------
-  Future<LoginResponseModel?> signUp({
+  Future<bool> signUp({
     required SignUpFormularyModel signUpFormularyModel,
     required context,
   }) async {
     try {
-      LoginResponseModel? loginResponseModel;
       var connectivityResult = await _appStore.checkConnectivity();
 
       if (connectivityResult) {
         signUpFormularyModel.password =
             _appStore.encryptFunction(signUpFormularyModel.password);
 
-        loginResponseModel = await _signUpRepository.getSignUp(
+        bool sucess = await _signUpRepository.getSignUp(
             signUpFormularyModel: signUpFormularyModel, context: context);
 
-        if (loginResponseModel != null) {
+        if (sucess) {
           _appStore.saveUserSharedPrefs(
               stringValue: 'cnpjValue', data: signUpFormularyModel.cnpj);
 
           _appStore.saveUserSharedPrefs(
-              stringValue: 'userValue', data: loginResponseModel.user.email);
+              stringValue: 'userValue', data: signUpFormularyModel.email);
 
           _appStore.saveUserSharedPrefs(
               stringValue: 'passwordValue',
               data: _appStore.decryptFunction(signUpFormularyModel.password));
 
-          return loginResponseModel;
+          return true;
         } else {
-          return null;
+          return false;
         }
       } else {
         awesomeDialogWidget(
@@ -59,10 +58,10 @@ class SignUpController {
             buttonColor: Colors.red.shade800,
             btnOkOnPress: () {});
 
-        return null;
+        return false;
       }
     } catch (e) {
-      return null;
+      return false;
     }
   }
 }

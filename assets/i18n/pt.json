@@ -39,6 +39,8 @@
     "confirmacaoEmail": "Confirmação de Email",
     "senha": "Senha",
     "confirmacaoSenha": "Confirmação de Senha",
+    "sucesso" : "Sucesso",
+    "msgConfirmacaoCadastro" : "Usuário cadastrado com sucesso.\nAguarde a liberaçao do administrador.",
     "cadastrar": "Cadastrar",
     "cadastrarSemConexao" : "É necessario estar conectado a internet para realizar o cadrastro."
   }

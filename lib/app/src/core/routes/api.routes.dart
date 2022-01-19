@@ -6,7 +6,7 @@ class ApiRoutes {
 
   //Production
   static const String _productionBaseUrl =
-      "http://cglael-001-site4.gtempurl.com/api/$API_VERSION/";
+      "http://cglael-001-site4.gtempurl.com/api/$API_VERSION";
 
 //----------------------------------------------------------------------------
 

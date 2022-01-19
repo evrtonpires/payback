@@ -1,7 +1,10 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cpf_cnpj_validator/cnpj_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:cpf_cnpj_validator/cpf_validator.dart';
+import 'package:payback/app/src/modules/util/alert_awesome/alert_awesome_widget.dart';
 
 import '../../../core/models/login_response_model.dart';
 import '../controllers/sign_up_controller.dart';
@@ -47,7 +50,7 @@ abstract class _SignUpStoreBase with Store {
   String? cnpj;
 
   @action
-  void setCnpj(String newCnpj) => cnpj = newCnpj;
+  void setCnpj(String newCnpj) => cnpj = newCnpj.trimRight();
 
   @observable
   String? messageCnpjError;
@@ -57,7 +60,7 @@ abstract class _SignUpStoreBase with Store {
   String? name;
 
   @action
-  void setName(String newName) => name = newName;
+  void setName(String newName) => name = newName.trimRight();
 
   @observable
   String? messageNameError;
@@ -68,7 +71,7 @@ abstract class _SignUpStoreBase with Store {
   String? email;
 
   @action
-  void setEmail(String newEmail) => email = newEmail;
+  void setEmail(String newEmail) => email = newEmail.trimRight();
 
   @observable
   String? messageEmailError;
@@ -79,7 +82,7 @@ abstract class _SignUpStoreBase with Store {
 
   @action
   void setEmailConfirmation(String newEmailConfirmation) =>
-      emailConfirmation = newEmailConfirmation;
+      emailConfirmation = newEmailConfirmation.trimRight();
 
   @observable
   String? messageEmailConfirmationError;
@@ -89,7 +92,7 @@ abstract class _SignUpStoreBase with Store {
   String? cpf;
 
   @action
-  void setCpf(String newCpf) => cpf = newCpf;
+  void setCpf(String newCpf) => cpf = newCpf.trimRight();
 
   @observable
   String? messageCpfError;
@@ -99,7 +102,7 @@ abstract class _SignUpStoreBase with Store {
   String? password;
 
   @action
-  void setPassword(String newPassword) => password = newPassword;
+  void setPassword(String newPassword) => password = newPassword.trimRight();
 
   @observable
   String? messagePasswordError;
@@ -110,7 +113,7 @@ abstract class _SignUpStoreBase with Store {
 
   @action
   void setPasswordConfirmation(String newPasswordConfirmation) =>
-      passwordConfirmation = newPasswordConfirmation;
+      passwordConfirmation = newPasswordConfirmation.trimRight();
 
   @observable
   String? messagePasswordConfirmationError;
@@ -286,8 +289,7 @@ abstract class _SignUpStoreBase with Store {
 
 //----------------------------------------------------------------------------
   @action
-  Future<void> autenticate(
-      BuildContext context, String title, String text) async {
+  Future<void> autenticate(BuildContext context) async {
     if (!cnpjValidate(context, requestFocus: true)) {
       return;
     }
@@ -322,21 +324,15 @@ abstract class _SignUpStoreBase with Store {
       );
 
       isLoading = true;
-      LoginResponseModel? loginResponse = await signUpController.signUp(
+      bool sucess = await signUpController.signUp(
         signUpFormularyModel: signUpFormulary,
         context: context,
       );
 
-      if (loginResponse != null) {
+      if (sucess) {
         isLoading = false;
-        appStore.userModel = loginResponse.user;
-        appStore.checkConnectivityPushNamed(
-          context: context,
-          rout: AppRouteNamed.home.fullPath!,
-          isReplacement: false,
-          title: title,
-          text: text,
-        );
+        Modular.to.pushNamed(AppRouteNamed.login.fullPath!,
+            arguments: {'sucess': true});
       } else {
         isLoading = false;
       }

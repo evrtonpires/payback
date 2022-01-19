@@ -1,6 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 
 import 'package:flutter/material.dart';
+import 'package:payback/app/src/core/models/api_response.model.dart';
 
 import '../interfaces/login_repository_interface.dart';
 import '../../../core/models/login_response_model.dart';
@@ -18,33 +19,47 @@ class LoginController {
   AppStore get appStore => _appStore;
 
   //----------------------------------------------------------------------------
-  Future<LoginResponseModel?> signIn({
+  Future<ApiResponseModel?> signIn({
     required LoginFormularyModel loginFormulary,
     required context,
   }) async {
     try {
-      LoginResponseModel? loginResponseModel;
       var connectivityResult = await _appStore.checkConnectivity();
 
       if (connectivityResult) {
         loginFormulary.password =
             _appStore.encryptFunction(loginFormulary.password);
-        loginResponseModel = await _loginRepository.getLogin(
+        ApiResponseModel? apiResponseModel = await _loginRepository.getLogin(
           loginFormulary: loginFormulary,
           context: context,
         );
-        if (loginResponseModel != null) {
-          _appStore.saveUserSharedPrefs(
-              stringValue: 'cnpjValue', data: loginFormulary.cnpj);
+        if (apiResponseModel != null) {
+          if (apiResponseModel.statusCode == 200) {
+            _appStore.saveUserSharedPrefs(
+                stringValue: 'cnpjValue', data: loginFormulary.cnpj);
 
-          _appStore.saveUserSharedPrefs(
-              stringValue: 'userValue', data: loginResponseModel.user.email);
+            _appStore.saveUserSharedPrefs(
+                stringValue: 'userValue',
+                data: LoginResponseModel.fromJson(apiResponseModel.data)
+                    .user
+                    .email);
 
-          _appStore.saveUserSharedPrefs(
-              stringValue: 'passwordValue',
-              data: _appStore.decryptFunction(loginFormulary.password));
+            _appStore.saveUserSharedPrefs(
+                stringValue: 'passwordValue',
+                data: _appStore.decryptFunction(loginFormulary.password));
 
-          return loginResponseModel;
+            return apiResponseModel;
+          } else {
+            awesomeDialogWidget(
+                context: context,
+                animType: AnimType.SCALE,
+                dialogType: DialogType.NO_HEADER,
+                text: apiResponseModel.data['messages'][0]['message'],
+                title: apiResponseModel.data['title'],
+                borderColor: Colors.red,
+                buttonColor: Colors.red.shade800,
+                btnOkOnPress: () {});
+          }
         } else {
           return null;
         }
@@ -62,6 +77,7 @@ class LoginController {
         return null;
       }
     } catch (e) {
+      print(e);
       return null;
     }
   }

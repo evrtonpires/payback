@@ -26,7 +26,7 @@ abstract class _AppStoreBase with Store {
   String ivSTR = "anhsudrmfo29xuc8";
 
   @observable
-  late UserModel userModel;
+  UserModel? userModel;
 
   @observable
   bool isDeviceConnected = false;
@@ -38,18 +38,20 @@ abstract class _AppStoreBase with Store {
 
   //----------------------------------------------------------------------------
 
-  Future<void> checkConnectivityPushNamed(
-      {context,
-      required String rout,
-      bool isReplacement = true,
-      required String title,
-      required String text}) async {
+  Future<void> checkConnectivityPushNamed({
+    context,
+    required String rout,
+    required String title,
+    required String text,
+    bool isReplacement = true,
+    Map<String,dynamic>? args,
+  }) async {
     var connectivityResult = await checkConnectivity();
     if (connectivityResult) {
       if (isReplacement) {
-        Modular.to.pushReplacementNamed(rout);
+        Modular.to.pushReplacementNamed(rout,arguments: args);
       } else {
-        Modular.to.pushNamed(rout);
+        Modular.to.pushNamed(rout,arguments: args);
       }
     } else {
       awesomeDialogWidget(

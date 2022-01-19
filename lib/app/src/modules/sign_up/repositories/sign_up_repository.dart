@@ -16,7 +16,7 @@ class SignUpRepository implements ISignUpRepository {
 
 //----------------------------------------------------------------------------
   @override
-  Future<LoginResponseModel?> getSignUp({
+  Future<bool> getSignUp({
     context,
     required SignUpFormularyModel signUpFormularyModel,
   }) async {
@@ -38,9 +38,23 @@ class SignUpRepository implements ISignUpRepository {
       });
 
       if (response.statusCode == 200) {
-        return LoginResponseModel.fromJson(response.data);
+        return true;
+      }else{
+        awesomeDialogWidget(
+            context: context,
+            animType: AnimType.SCALE,
+            dialogType: DialogType.NO_HEADER,
+            text: response.data['messages'][0]['message'],
+            title: response.data['title'],
+            borderColor: Colors.red,
+            buttonColor: Colors.red.shade800,
+            btnOkOnPress: () {});
+        return false;
       }
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+      return false;
+    }
   }
 
 //----------------------------------------------------------------------------

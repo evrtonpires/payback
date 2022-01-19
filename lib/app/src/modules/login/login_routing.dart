@@ -7,7 +7,7 @@ class LoginRouting {
   static final List<ModularRoute> routes = [
     ChildRoute(
       LoginRouteNamed.login._path!,
-      child: (_, args) => const LoginPage(),
+      child: (_, args) =>  LoginPage(sucess: args.data?['sucess'] ?? false),
     ),
   ];
 }
