@@ -17,6 +17,8 @@ abstract class IconConstant {
 
   static String get logoWide => 'assets/icon/logo_wide.svg';
 
+  static String get photography => 'assets/icon/photography.png';
+
   static String get logoSplash => 'assets/icon/splash_art/logo_splash.svg';
 
   //----------------------------------------------------------------------------

@@ -113,7 +113,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore>
                                           placeholder: FlutterI18n.translate(
                                               context, 'telaLogin.cnpj'),
                                           onChanged: (newCnpj) {
-                                            store.setCnpj(newCnpj);
+                                            store.setCnpj(maskFormatter.getUnmaskedText());
                                             store.cnpjValidate(context);
                                           },
                                           textInputAction: TextInputAction.next,

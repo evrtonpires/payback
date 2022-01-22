@@ -3,6 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../modules/prescribe/views/widgets/floating_action_button_custom.dart';
 import '../../../modules/prescribe/stores/prescribe_store.dart';
+import '../prescribe_routing.dart';
 import 'widgets/card_prescribe.dart';
 import 'widgets/search_dialog.dart';
 
@@ -38,7 +39,9 @@ class PrescribePageState extends ModularState<PrescribePage, PrescribeStore> {
                   });
               if (valorPesquisado != null) {}
             },
-            addOnTap: () {},
+            addOnTap: () => store.addPrescribePage(
+                rout: PrescribeRouteNamed.addPrescribe.fullPath!,
+                context: context),
           ))
     ]);
   }

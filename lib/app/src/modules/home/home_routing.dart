@@ -39,7 +39,7 @@ extension HomeouteNamedExtension on HomeRouteNamed {
       case HomeRouteNamed.remedy:
         return 'remedy/';
       case HomeRouteNamed.prescribe:
-        return 'prescribe/';
+        return 'prescribe';
       case HomeRouteNamed.point:
         return 'point/';
       default:

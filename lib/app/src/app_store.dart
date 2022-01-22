@@ -44,14 +44,14 @@ abstract class _AppStoreBase with Store {
     required String title,
     required String text,
     bool isReplacement = true,
-    Map<String,dynamic>? args,
+    Map<String, dynamic>? args,
   }) async {
     var connectivityResult = await checkConnectivity();
     if (connectivityResult) {
       if (isReplacement) {
-        Modular.to.pushReplacementNamed(rout,arguments: args);
+        Modular.to.pushReplacementNamed(rout, arguments: args);
       } else {
-        Modular.to.pushNamed(rout,arguments: args);
+        Modular.to.pushNamed(rout, arguments: args);
       }
     } else {
       awesomeDialogWidget(
@@ -67,12 +67,20 @@ abstract class _AppStoreBase with Store {
   }
 
   //----------------------------------------------------------------------------
+  Future<void> modularPop() async {
+    Modular.to.pop();
+  }
+
+  //----------------------------------------------------------------------------
   Future<void> pushNamed(
-      {context, required String rout, bool isReplacement = true}) async {
+      {context,
+      required String rout,
+      bool isReplacement = true,
+      bool isRootNavigator = false}) async {
     if (isReplacement) {
       Modular.to.pushReplacementNamed(rout);
     } else {
-      Modular.to.pushNamed(rout);
+      Modular.to.pushNamed(rout, forRoot: isRootNavigator);
     }
   }
 
