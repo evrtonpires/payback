@@ -1,11 +1,11 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 
-import '../../../modules/prescribe/interfaces/prescribe_repository_interface.dart';
-import '../../../core/models/api_response.model.dart';
-import '../../../core/routes/api.routes.dart';
-import '../../util/alert_awesome/alert_awesome_widget.dart';
-import '../../../core/interfaces/api.interface.dart';
+import '../../interfaces/prescribe/prescribe_repository_interface.dart';
+import '../../../../core/models/api_response.model.dart';
+import '../../../../core/routes/api.routes.dart';
+import '../../../util/alert_awesome/alert_awesome_widget.dart';
+import '../../../../core/interfaces/api.interface.dart';
 
 class PrescribeRepository implements IPrescribeRepository {
   PrescribeRepository(this._api);

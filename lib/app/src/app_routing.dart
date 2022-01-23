@@ -34,7 +34,7 @@ extension AppRouteNamedExtension on AppRouteNamed {
       case AppRouteNamed.login:
         return '/login/';
       case AppRouteNamed.home:
-        return '/home/';
+        return '/home';
       case AppRouteNamed.signUp:
         return '/signup/';
       case AppRouteNamed.recoveryPassword:

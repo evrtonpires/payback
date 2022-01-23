@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:payback/app/src/modules/prescribe/stores/prescribe_store.dart';
+import 'package:payback/app/src/modules/home/stores/prescribe/prescribe_store.dart';
 import 'package:payback/app/src/modules/util/colors/colors.dart';
 
 class DrugPage extends StatefulWidget {

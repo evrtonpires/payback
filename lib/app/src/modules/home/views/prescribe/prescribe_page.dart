@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+import 'package:payback/app/src/modules/home/stores/prescribe/prescribe_store.dart';
 
-import '../../../modules/prescribe/views/widgets/floating_action_button_custom.dart';
-import '../../../modules/prescribe/stores/prescribe_store.dart';
-import '../prescribe_routing.dart';
+import '../../home_routing.dart';
 import 'widgets/card_prescribe.dart';
+import 'widgets/floating_action_button_custom.dart';
 import 'widgets/search_dialog.dart';
 
 class PrescribePage extends StatefulWidget {
-  final String title;
+  const PrescribePage({
+    Key? key,
+    required this.prescribeStore,
+  }) : super(key: key);
 
-  const PrescribePage({Key? key, this.title = 'PrescribePage'})
-      : super(key: key);
+  final PrescribeStore prescribeStore;
 
   @override
   PrescribePageState createState() => PrescribePageState();
 }
 
-class PrescribePageState extends ModularState<PrescribePage, PrescribeStore> {
-
+class PrescribePageState extends State<PrescribePage> {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
@@ -38,9 +38,8 @@ class PrescribePageState extends ModularState<PrescribePage, PrescribeStore> {
                   });
               if (valorPesquisado != null) {}
             },
-            addOnTap: () => store.addPrescribePage(
-                rout: PrescribeRouteNamed.addPrescribe.fullPath!,
-                context: context),
+            addOnTap: () => widget.prescribeStore.addPrescribePage(
+                rout: HomeRouteNamed.addPrescribe.fullPath!, context: context),
           ))
     ]);
   }

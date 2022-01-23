@@ -3,11 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:payback/app/src/modules/prescribe/prescribe_routing.dart';
-import 'package:payback/app/src/modules/prescribe/stores/prescribe_store.dart';
+import 'package:payback/app/src/modules/home/stores/prescribe/prescribe_store.dart';
 import 'package:payback/app/src/modules/util/colors/colors.dart';
+import 'package:payback/app/src/modules/util/constants/icons_constants.dart';
 import 'package:payback/app/src/modules/util/widgets/text_field_with_validation_widget.dart';
-import '../../util/constants/icons_constants.dart';
+
+import '../../home_routing.dart';
 
 class AddPrescribePage extends StatefulWidget {
   const AddPrescribePage({Key? key, required this.store}) : super(key: key);
@@ -247,8 +248,7 @@ class _AddPrescribePageState extends State<AddPrescribePage>
                                         widget
                                             .store.prescribeController.appStore
                                             .pushNamed(
-                                                rout: PrescribeRouteNamed
-                                                    .selectDrugs.fullPath!,
+                                                rout: HomeRouteNamed.selectDrugs.fullPath!,
                                                 isRootNavigator: true,
                                                 isReplacement: false,
                                                 context: context);
@@ -479,7 +479,7 @@ class _AddPrescribePageState extends State<AddPrescribePage>
       floatingActionButton:Observer(
         builder: (context) => Visibility(
           visible: widget.store.image != null &&
-              widget.store.codeValidate(context) &&
+              widget.store.messageCodeError == null &&
               widget.store.listDrugSelected.isNotEmpty,
           child: FloatingActionButton(
             onPressed: (){},

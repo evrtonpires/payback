@@ -1,47 +1,50 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:payback/app/src/modules/home/views/prescribe/add_prescribe_page.dart';
 
-import '../../modules/point/point_module.dart';
-import '../../modules/prescribe/prescribe_module.dart';
-import '../../modules/remedy/remedy_module.dart';
 import '../../app_routing.dart';
 import 'views/home_page.dart';
+import 'views/prescribe/drug_page.dart';
 
 class HomeRouting {
   static final List<ModularRoute> routes = [
     ChildRoute(
       HomeRouteNamed.home._path!,
-      child: (_, args) => const HomePage(),
-      children: [
-        ModuleRoute(
-          HomeRouteNamed.remedy._path!,
-          module: RemedyModule(),
-        ),
-        ModuleRoute(
-          HomeRouteNamed.prescribe._path!,
-          module: PrescribeModule(),
-        ),
-        ModuleRoute(
-          HomeRouteNamed.point._path!,
-          module: PointModule(),
-        ),
-      ],
+      child: (_, args) => HomePage(
+        prescribeStore: Modular.get(),
+      ),
+    ),
+    ChildRoute(
+      HomeRouteNamed.addPrescribe._path!,
+      child: (_, args) => AddPrescribePage(
+        store: Modular.get(),
+      ),
+    ),  ChildRoute(
+      HomeRouteNamed.selectDrugs._path!,
+      child: (_, args) => DrugPage(
+        store: Modular.get(),
+      ),
     ),
   ];
 }
 
-enum HomeRouteNamed { home, remedy, prescribe, point }
+enum HomeRouteNamed {
+  home,
+  remedy,
+  prescribe,
+  point,
+  addPrescribe,
+  selectDrugs
+}
 
 extension HomeouteNamedExtension on HomeRouteNamed {
   String? get _path {
     switch (this) {
       case HomeRouteNamed.home:
         return '/';
-      case HomeRouteNamed.remedy:
-        return 'remedy/';
-      case HomeRouteNamed.prescribe:
-        return 'prescribe';
-      case HomeRouteNamed.point:
-        return 'point/';
+      case HomeRouteNamed.addPrescribe:
+        return '/prescribe/addPrescribe';
+      case HomeRouteNamed.selectDrugs:
+        return '/prescribe/addPrescribe/selectDrugs';
       default:
         return null;
     }

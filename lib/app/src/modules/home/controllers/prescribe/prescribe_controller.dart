@@ -2,12 +2,12 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../../core/models/api_response.model.dart';
-import '../../../modules/prescribe/interfaces/prescribe_repository_interface.dart';
-import '../../../modules/util/colors/colors.dart';
-import '../../../core/models/login_response_model.dart';
-import '../../util/alert_awesome/alert_awesome_widget.dart';
-import '../../../app_store.dart';
+import '../../../../core/models/api_response.model.dart';
+import '../../interfaces/prescribe/prescribe_repository_interface.dart';
+import '../../../util/colors/colors.dart';
+import '../../../../core/models/login_response_model.dart';
+import '../../../util/alert_awesome/alert_awesome_widget.dart';
+import '../../../../app_store.dart';
 
 class PrescribeController {
   PrescribeController(this._prescribeRepository, this._appStore);

@@ -2,15 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:payback/app/src/modules/home/stores/prescribe/prescribe_store.dart';
+import 'package:payback/app/src/modules/home/views/point/point_page.dart';
+import 'package:payback/app/src/modules/home/views/prescribe/prescribe_page.dart';
+import 'package:payback/app/src/modules/home/views/remedy/remedy_page.dart';
 
-import '../../../modules/home/home_routing.dart';
 import '../../../modules/util/constants/icons_constants.dart';
 import '../../util/colors/colors.dart';
 import '../stores/home_store.dart';
 import 'widgets/tab_widget.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key, required this.prescribeStore}) : super(key: key);
+
+  final PrescribeStore prescribeStore;
 
   @override
   HomePageState createState() => HomePageState();
@@ -19,17 +24,19 @@ class HomePage extends StatefulWidget {
 class HomePageState extends ModularState<HomePage, HomeStore>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  late PageController _pageController;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
-    Modular.to.navigate(HomeRouteNamed.remedy.fullPath!);
+    _pageController = PageController(initialPage: 0);
   }
 
   @override
   void dispose() {
     _tabController.dispose();
+    _pageController.dispose();
     super.dispose();
   }
 
@@ -55,23 +62,29 @@ class HomePageState extends ModularState<HomePage, HomeStore>
             bottom: TabBar(
               onTap: (page) {
                 if (page == 0) {
-                  Modular.to.navigate(HomeRouteNamed.remedy.fullPath!);
+                  _pageController.animateToPage(0,
+                      duration: const Duration(milliseconds: 250),
+                      curve: Curves.bounceInOut);
                 }
                 if (page == 1) {
-                  Modular.to.navigate(HomeRouteNamed.prescribe.fullPath!);
+                  _pageController.animateToPage(1,
+                      duration: const Duration(milliseconds: 250),
+                      curve: Curves.bounceInOut);
                 }
                 if (page == 2) {
-                  Modular.to.navigate(HomeRouteNamed.point.fullPath!);
+                  _pageController.animateToPage(2,
+                      duration: const Duration(milliseconds: 250),
+                      curve: Curves.bounceInOut);
                 }
               },
               controller: _tabController,
               tabs: [
                 TabWidget(
-                    iconPath: IconConstant.iconDroug,
-                    titlePath: 'telaHome.remedios'),
-                TabWidget(
                     iconPath: IconConstant.iconDoc,
                     titlePath: 'telaHome.receitas'),
+                TabWidget(
+                    iconPath: IconConstant.iconDroug,
+                    titlePath: 'telaHome.remedios'),
                 TabWidget(
                     iconPath: IconConstant.iconDash,
                     titlePath: 'telaHome.pontos'),
@@ -82,8 +95,15 @@ class HomePageState extends ModularState<HomePage, HomeStore>
                   const TextStyle(fontWeight: FontWeight.normal),
             ),
           ),
-          body: RouterOutlet(),
-
+          body: PageView(
+            controller: _pageController,
+            physics: const NeverScrollableScrollPhysics(),
+            children: [
+              PrescribePage(prescribeStore: widget.prescribeStore),
+              const RemedyPage(),
+              const PointPage(),
+            ],
+          ),
         ),
       ),
     );

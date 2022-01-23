@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
-import 'package:payback/app/src/modules/prescribe/controllers/prescribe_controller.dart';
-import 'package:payback/app/src/modules/prescribe/models/drug_model.dart';
+import 'package:payback/app/src/modules/home/controllers/prescribe/prescribe_controller.dart';
+import 'package:payback/app/src/modules/home/models/prescribe/drug_model.dart';
 
 part 'prescribe_store.g.dart';
 
