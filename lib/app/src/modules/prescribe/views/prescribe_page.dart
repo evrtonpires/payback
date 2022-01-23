@@ -18,7 +18,6 @@ class PrescribePage extends StatefulWidget {
 }
 
 class PrescribePageState extends ModularState<PrescribePage, PrescribeStore> {
-  List<int> items = List<int>.generate(15, (int index) => index);
 
   @override
   Widget build(BuildContext context) {

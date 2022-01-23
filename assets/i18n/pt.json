@@ -3,6 +3,9 @@
     "aviso": "Aviso",
     "semConexao" : "Ops\nVerifique sua conexão com a internet e tente novamente."
   },
+  "telaPrescricao": {
+    "codigo": "Código"
+  },
   "telaHome": {
     "remedios": "Remédios",
     "receitas" : "Receitas",
