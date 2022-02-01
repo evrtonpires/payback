@@ -4,9 +4,11 @@ import 'package:payback/app/src/modules/util/colors/colors.dart';
 import 'package:payback/app/src/modules/util/constants/icons_constants.dart';
 
 class LoadingPageWidget extends StatefulWidget {
-  const LoadingPageWidget({Key? key, required this.store}) : super(key: key);
+  const LoadingPageWidget({Key? key, required this.store, this.msg})
+      : super(key: key);
 
   final dynamic store;
+  final String? msg;
 
   @override
   _LoadingPageWidgetState createState() => _LoadingPageWidgetState();
@@ -36,9 +38,9 @@ class _LoadingPageWidgetState extends State<LoadingPageWidget> {
                           height: 60.0,
                         ),
                         const SizedBox(height: 10),
-                        const Text(
-                          'Entrando. Aguarde ...',
-                          style: TextStyle(
+                        Text(
+                          widget.msg ?? 'Entrando. Aguarde ...',
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: ColorsConstants.white),
                         )

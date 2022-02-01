@@ -22,8 +22,9 @@ class ApiService implements IApi {
   Future<ApiResponseModel> call(
       {required EApiType type,
       required String url,
-      Map<String, dynamic>? data,
-      Map<String, dynamic>? headers}) async {
+      dynamic data,
+      Map<String, dynamic>? headers,
+      Function(int, int)? onSendProgress}) async {
     if (headers != null) {
       dio.options.headers = headers;
     } else {
@@ -37,16 +38,22 @@ class ApiService implements IApi {
             queryParameters: data);
         break;
       case EApiType.post:
-        response = await dio.post("/$url", data: jsonEncode(data));
+        response = await dio.post("/$url",
+            data: data, onSendProgress: onSendProgress);
         break;
       case EApiType.put:
-        response = await dio.put("/$url", data: jsonEncode(data));
+        response = await dio.put("/$url",
+            data: jsonEncode(data), onSendProgress: onSendProgress);
         break;
       case EApiType.patch:
-        response = await dio.patch("/$url", data: jsonEncode(data));
+        response = await dio.patch("/$url",
+            data: jsonEncode(data), onSendProgress: onSendProgress);
         break;
       case EApiType.delete:
-        response = await dio.delete("/$url", data: jsonEncode(data));
+        response = await dio.delete(
+          "/$url",
+          data: jsonEncode(data),
+        );
         break;
       case EApiType.head:
         response = await dio.head(url.contains("http") ? url : "/$url",

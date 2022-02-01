@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:payback/app/src/core/models/api_response.model.dart';
 
 abstract class IPrescribeRepository {
@@ -7,6 +9,7 @@ abstract class IPrescribeRepository {
 
   Future<ApiResponseModel?> addPrescribe({
     required context,
+    required dynamic data,
   });
 
   Future<ApiResponseModel?> updatePrescribe({
@@ -15,5 +18,12 @@ abstract class IPrescribeRepository {
 
   Future<ApiResponseModel?> deletePrescribe({
     required context,
+  });
+
+  Future<ApiResponseModel?> uploadFormData({
+    required context,
+    required File file,
+    required int precripId,
+    required Function(int send, int total) onSendProgress,
   });
 }

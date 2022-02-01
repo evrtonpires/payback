@@ -28,6 +28,8 @@ abstract class _AppStoreBase with Store {
   @observable
   UserModel? userModel;
 
+  String? token;
+
   @observable
   bool isDeviceConnected = false;
 

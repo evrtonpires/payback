@@ -2,9 +2,9 @@ class ApiRoutes {
   static String get baseUrl => _productionBaseUrl;
   static const String API_VERSION = "v1";
 
-  //Homologation
+//Homologation
 
-  //Production
+//Production
   static const String _productionBaseUrl =
       "http://cglael-001-site4.gtempurl.com/api/$API_VERSION";
 
@@ -50,6 +50,7 @@ class ApiRoutes {
 //PRESCRIPTION
   static const String getPrescriptions = "Prescription";
   static const String addPrescription = "Prescription";
+  static String postImage(int idPrescription) => "Prescription/img/$idPrescription";
 
   static String getPrescriptionByCode(int idPrescription) =>
       "Prescription/$idPrescription";

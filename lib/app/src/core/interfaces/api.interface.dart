@@ -4,8 +4,9 @@ abstract class IApi {
   Future<ApiResponseModel> call({
     required EApiType type,
     required String url,
-    Map<String, dynamic>? data,
+    dynamic data,
     Map<String, dynamic>? headers,
+    Function(int, int)? onSendProgress,
   });
 }
 

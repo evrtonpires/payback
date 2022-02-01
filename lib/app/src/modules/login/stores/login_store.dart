@@ -164,6 +164,8 @@ abstract class LoginStoreBase with Store {
         isLoading = false;
         appStore.userModel =
             LoginResponseModel.fromJson(apiResponseModel.data).user;
+        appStore.token =
+            LoginResponseModel.fromJson(apiResponseModel.data).token;
         appStore.checkConnectivityPushNamed(
           context: context,
           rout: AppRouteNamed.home.fullPath!,

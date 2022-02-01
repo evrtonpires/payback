@@ -9,6 +9,36 @@ part of 'prescribe_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$PrescribeStore on _PrescribeStoreBase, Store {
+  final _$isLoadingAtom = Atom(name: '_PrescribeStoreBase.isLoading');
+
+  @override
+  bool get isLoading {
+    _$isLoadingAtom.reportRead();
+    return super.isLoading;
+  }
+
+  @override
+  set isLoading(bool value) {
+    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
+      super.isLoading = value;
+    });
+  }
+
+  final _$sendMessageAtom = Atom(name: '_PrescribeStoreBase.sendMessage');
+
+  @override
+  String? get sendMessage {
+    _$sendMessageAtom.reportRead();
+    return super.sendMessage;
+  }
+
+  @override
+  set sendMessage(String? value) {
+    _$sendMessageAtom.reportWrite(value, super.sendMessage, () {
+      super.sendMessage = value;
+    });
+  }
+
   final _$imageAtom = Atom(name: '_PrescribeStoreBase.image');
 
   @override
@@ -119,6 +149,8 @@ mixin _$PrescribeStore on _PrescribeStoreBase, Store {
   @override
   String toString() {
     return '''
+isLoading: ${isLoading},
+sendMessage: ${sendMessage},
 image: ${image},
 code: ${code},
 messageCodeError: ${messageCodeError},
