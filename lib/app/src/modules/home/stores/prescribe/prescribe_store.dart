@@ -18,7 +18,6 @@ abstract class _PrescribeStoreBase with Store {
   _PrescribeStoreBase({required this.prescribeController}) {
     _picker = ImagePicker();
     focusCode = FocusNode();
-    getAllDrugs();
   }
 
   final PrescribeController prescribeController;
@@ -32,6 +31,7 @@ abstract class _PrescribeStoreBase with Store {
 //----------------------------------------------------------------------------
   @observable
   String? sendMessage;
+
 //----------------------------------------------------------------------------
   @observable
   File? image;
@@ -61,61 +61,36 @@ abstract class _PrescribeStoreBase with Store {
   bool haveDrugSelected = false;
 
 //----------------------------------------------------------------------------
-  Future<void> getAllDrugs() async {
-    drugs.addAll([
-      DrugModel(
-          id: 1,
-          name: 'BEXAI',
-          activePrinciple: 'Diclofenaco',
-          logoUrl:
-          'https://www.jnjbrasil.com.br/sites/default/files/logo-johson_3.jpg',
-          dots: 60,
-          distributorId: 1),
-      DrugModel(
-          id: 1,
-          name: 'Ems',
-          activePrinciple: 'Diclofenaco',
-          logoUrl:
-          'https://www.jnjbrasil.com.br/sites/default/files/logo-johson_3.jpg',
-          dots: 20,
-          distributorId: 1),
-      DrugModel(
-          id: 3,
-          name: 'Jhonson',
-          activePrinciple: 'Dipirona',
-          logoUrl:
-          'https://www.jnjbrasil.com.br/sites/default/files/logo-johson_3.jpg',
-          dots: 25,
-          distributorId: 1),
-      DrugModel(
-          id: 4,
-          name: 'Lael',
-          activePrinciple: 'Laxante',
-          logoUrl:
-          'https://www.jnjbrasil.com.br/sites/default/files/logo-johson_3.jpg',
-          dots: 15,
-          distributorId: 2),
-      DrugModel(
-          id: 5,
-          name: 'Baroni',
-          activePrinciple: 'Saiu da Unip',
-          logoUrl:
-          'https://www.jnjbrasil.com.br/sites/default/files/logo-johson_3.jpg',
-          dots: 50,
-          distributorId: 3),
-    ]);
+  Future<void> getAllDrugs({required BuildContext context}) async {
+    ApiResponseModel? apiResponseModel =
+        await prescribeController.getAllDrugs(context: context);
+
+    if (apiResponseModel?.statusCode == 200) {
+      drugs = apiResponseModel?.data.map<DrugModel>((e) {
+        final drug = DrugModel.fromJson(e);
+        return drug;
+      }).toList();
+    } else {
+      sendMessage = null;
+      isLoading = false;
+      awesomeDialogWidget(
+          context: context,
+          animType: AnimType.SCALE,
+          dialogType: DialogType.NO_HEADER,
+          text: apiResponseModel?.data['messages'][0]['message'],
+          title: apiResponseModel?.data['title'],
+          borderColor: Colors.red,
+          buttonColor: Colors.red.shade800,
+          btnOkOnPress: () {});
+    }
   }
 
 //----------------------------------------------------------------------------
   void selectDrug(DrugModel drug) {
-    drugs
-        .firstWhere((element) => element.id == drug.id)
-        .isSelect =
-    !drug.isSelect;
+    drugs.firstWhere((element) => element.id == drug.id).isSelect =
+        !drug.isSelect;
     drugs = drugs;
-    haveDrugSelected = drugs
-        .where((element) => element.isSelect)
-        .isNotEmpty;
+    haveDrugSelected = drugs.where((element) => element.isSelect).isNotEmpty;
   }
 
 //----------------------------------------------------------------------------
@@ -134,13 +109,9 @@ abstract class _PrescribeStoreBase with Store {
   void removeDrugsSelected(DrugModel drug) {
     listDrugSelected.removeWhere((element) => element.id == drug.id);
     listDrugSelected = listDrugSelected;
-    drugs
-        .firstWhere((element) => element.id == drug.id)
-        .isSelect = false;
+    drugs.firstWhere((element) => element.id == drug.id).isSelect = false;
     drugs = drugs;
-    haveDrugSelected = drugs
-        .where((element) => element.isSelect)
-        .isNotEmpty;
+    haveDrugSelected = drugs.where((element) => element.isSelect).isNotEmpty;
   }
 
 //----------------------------------------------------------------------------
@@ -170,7 +141,7 @@ abstract class _PrescribeStoreBase with Store {
   Future<File?> addImagePrescribeCamera() async {
     File? fileImage;
     XFile? img =
-    await _picker.pickImage(source: ImageSource.camera, imageQuality: 50);
+        await _picker.pickImage(source: ImageSource.camera, imageQuality: 50);
     if (img != null) {
       fileImage = File(img.path);
       // final bytes = fileImage.readAsBytesSync().lengthInBytes;
@@ -186,11 +157,12 @@ abstract class _PrescribeStoreBase with Store {
     var i = (log(bytes) / log(1024)).floor();
     return ((bytes / pow(1024, i)).toStringAsFixed(decimals)) + suffixes[i];
   }
+
 //----------------------------------------------------------------------------
   Future<File?> addImagePrescribeGallery() async {
     File? fileImage;
     XFile? img =
-    await _picker.pickImage(source: ImageSource.gallery, imageQuality: 100);
+        await _picker.pickImage(source: ImageSource.gallery, imageQuality: 100);
     if (img != null) {
       fileImage = File(img.path);
     }
@@ -234,12 +206,9 @@ abstract class _PrescribeStoreBase with Store {
   Future<Map<String, dynamic>> addPrescribe(context) async {
     sendMessage = 'Enviando informações';
     ApiResponseModel? apiResponseModel =
-    await prescribeController.addPrescribe(context: context, data: {
+        await prescribeController.addPrescribe(context: context, data: {
       "code": code,
-      "imageName": image!
-          .path
-          .split('/')
-          .last,
+      "imageName": image!.path.split('/').last,
       "drugsId": listDrugSelected.map((e) => e.id).toList(),
       "companyId": prescribeController.appStore.userModel!.companyId,
     });
@@ -266,15 +235,15 @@ abstract class _PrescribeStoreBase with Store {
 
 //----------------------------------------------------------------------------
   Future<bool> uploadFormData(context, int precripId) async {
-    ApiResponseModel? apiResponseModel = await prescribeController
-        .uploadFormData(context: context,
-        file: image!,
-        precripId: precripId,
-        onSendProgress: (int send, int total) {
-          String percent = (send / total * 100).toStringAsFixed(2);
-          print(percent);
-            sendMessage = '$percent%';
-        });
+    ApiResponseModel? apiResponseModel =
+        await prescribeController.uploadFormData(
+            context: context,
+            file: image!,
+            precripId: precripId,
+            onSendProgress: (int send, int total) {
+              String percent = (send / total * 100).toStringAsFixed(2);
+              sendMessage = '$percent%';
+            });
     if (apiResponseModel?.statusCode == 200) {
       isLoading = false;
       return true;

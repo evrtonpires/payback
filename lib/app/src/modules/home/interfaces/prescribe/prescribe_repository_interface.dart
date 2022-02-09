@@ -7,6 +7,10 @@ abstract class IPrescribeRepository {
     required context,
   });
 
+  Future<ApiResponseModel?> getAllDrugs({
+    required context,
+  });
+
   Future<ApiResponseModel?> addPrescribe({
     required context,
     required dynamic data,
@@ -15,6 +19,7 @@ abstract class IPrescribeRepository {
   Future<ApiResponseModel?> updatePrescribe({
     required context,
   });
+
 
   Future<ApiResponseModel?> deletePrescribe({
     required context,

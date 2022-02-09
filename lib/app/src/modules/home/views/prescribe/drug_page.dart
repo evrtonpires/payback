@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:payback/app/src/modules/home/stores/prescribe/prescribe_store.dart';
 import 'package:payback/app/src/modules/util/colors/colors.dart';
+import 'package:payback/app/src/modules/util/constants/icons_constants.dart';
 
 class DrugPage extends StatefulWidget {
   const DrugPage({Key? key, required this.store}) : super(key: key);
@@ -52,11 +54,19 @@ class _DrugPageState extends State<DrugPage> {
                           ),
                         ),
                         child: ListTile(
-                          title: Text(widget.store.drugs[index].name),
+                          title: Text(
+                            widget.store.drugs[index].name,
+                            textAlign: TextAlign.left,
+                          ),
                           subtitle:
                               Text(widget.store.drugs[index].activePrinciple),
-                          leading:
-                              Image.network(widget.store.drugs[index].logoUrl),
+                          leading: widget.store.drugs[index].logoUrl.isEmpty
+                              ? Image.asset(
+                                  IconConstant.photography,
+                                  color: ColorsConstants.primary,
+                                )
+                              : Image.network(
+                                  widget.store.drugs[index].logoUrl),
                           trailing: Visibility(
                             visible: widget.store.drugs[index].isSelect,
                             child: Container(

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -31,6 +30,7 @@ class HomePageState extends ModularState<HomePage, HomeStore>
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
     _pageController = PageController(initialPage: 0);
+    widget.prescribeStore.getAllDrugs(context: context);
   }
 
   @override

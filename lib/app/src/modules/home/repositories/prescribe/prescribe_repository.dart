@@ -133,6 +133,34 @@ class PrescribeRepository implements IPrescribeRepository {
 
 //----------------------------------------------------------------------------
 
+  @override
+  Future<ApiResponseModel?> getAllDrugs({required context}) async {
+    try {
+      ApiResponseModel response = await _api.call(
+          type: EApiType.get,
+          url: ApiRoutes.getDrugs,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ${Modular.get<AppStore>().token}'
+          }).catchError((e) {
+        awesomeDialogWidget(
+            context: context,
+            animType: AnimType.SCALE,
+            dialogType: DialogType.NO_HEADER,
+            text: e.response.data['messages'][0]['message'],
+            title: e.response.data['title'],
+            borderColor: Colors.red,
+            buttonColor: Colors.red.shade800,
+            btnOkOnPress: () {});
+      });
+      return response;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+//----------------------------------------------------------------------------
+
   Future<FormData> transformFormData(File file) async {
     final String fileName = file.path.split('/').last;
     return FormData.fromMap(<String, dynamic>{
