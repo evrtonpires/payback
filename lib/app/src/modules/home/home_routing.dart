@@ -11,6 +11,7 @@ class HomeRouting {
       HomeRouteNamed.home._path!,
       child: (_, args) => HomePage(
         prescribeStore: Modular.get(),
+        pointStore: Modular.get(),
       ),
     ),
     ChildRoute(

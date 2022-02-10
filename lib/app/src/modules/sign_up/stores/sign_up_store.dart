@@ -50,7 +50,7 @@ abstract class _SignUpStoreBase with Store {
   String? cnpj;
 
   @action
-  void setCnpj(String newCnpj) => cnpj = newCnpj.trimRight();
+  void setCnpj(String newCnpj) => cnpj = newCnpj.trim();
 
   @observable
   String? messageCnpjError;
@@ -60,7 +60,7 @@ abstract class _SignUpStoreBase with Store {
   String? name;
 
   @action
-  void setName(String newName) => name = newName.trimRight();
+  void setName(String newName) => name = newName.trim();
 
   @observable
   String? messageNameError;
@@ -71,7 +71,7 @@ abstract class _SignUpStoreBase with Store {
   String? email;
 
   @action
-  void setEmail(String newEmail) => email = newEmail.trimRight();
+  void setEmail(String newEmail) => email = newEmail.trim();
 
   @observable
   String? messageEmailError;
@@ -82,7 +82,7 @@ abstract class _SignUpStoreBase with Store {
 
   @action
   void setEmailConfirmation(String newEmailConfirmation) =>
-      emailConfirmation = newEmailConfirmation.trimRight();
+      emailConfirmation = newEmailConfirmation.trim();
 
   @observable
   String? messageEmailConfirmationError;
@@ -92,7 +92,7 @@ abstract class _SignUpStoreBase with Store {
   String? cpf;
 
   @action
-  void setCpf(String newCpf) => cpf = newCpf.trimRight();
+  void setCpf(String newCpf) => cpf = newCpf.trim();
 
   @observable
   String? messageCpfError;
@@ -102,7 +102,7 @@ abstract class _SignUpStoreBase with Store {
   String? password;
 
   @action
-  void setPassword(String newPassword) => password = newPassword.trimRight();
+  void setPassword(String newPassword) => password = newPassword.trim();
 
   @observable
   String? messagePasswordError;
@@ -113,7 +113,7 @@ abstract class _SignUpStoreBase with Store {
 
   @action
   void setPasswordConfirmation(String newPasswordConfirmation) =>
-      passwordConfirmation = newPasswordConfirmation.trimRight();
+      passwordConfirmation = newPasswordConfirmation.trim();
 
   @observable
   String? messagePasswordConfirmationError;

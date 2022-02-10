@@ -60,13 +60,13 @@ class _DrugPageState extends State<DrugPage> {
                           ),
                           subtitle:
                               Text(widget.store.drugs[index].activePrinciple),
-                          leading: widget.store.drugs[index].logoUrl.isEmpty
+                          leading: (widget.store.drugs[index].logoUrl == null || widget.store.drugs[index].logoUrl!.isEmpty)
                               ? Image.asset(
                                   IconConstant.photography,
                                   color: ColorsConstants.primary,
                                 )
                               : Image.network(
-                                  widget.store.drugs[index].logoUrl),
+                                  widget.store.drugs[index].logoUrl!),
                           trailing: Visibility(
                             visible: widget.store.drugs[index].isSelect,
                             child: Container(

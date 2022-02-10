@@ -23,6 +23,8 @@ abstract class IPrescribeRepository {
 
   Future<ApiResponseModel?> deletePrescribe({
     required context,
+    required int companyId,
+    required int prescriptionId,
   });
 
   Future<ApiResponseModel?> uploadFormData({

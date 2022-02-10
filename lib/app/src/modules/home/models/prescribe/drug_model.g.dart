@@ -10,7 +10,7 @@ DrugModel _$DrugModelFromJson(Map<String, dynamic> json) => DrugModel(
       id: json['id'] as int,
       name: json['name'] as String,
       activePrinciple: json['activePrinciple'] as String,
-      logoUrl: json['logoUrl'] as String,
+      logoUrl: json['logoUrl'] as String?,
       dots: json['dots'] as int,
       distributorId: json['distributorId'] as int,
       isSelect: json['isSelect'] as bool? ?? false,

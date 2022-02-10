@@ -487,9 +487,18 @@ class _AddPrescribePageState extends State<AddPrescribePage>
                   widget.store.listDrugSelected.isNotEmpty,
               child: FloatingActionButton(
                 onPressed: () async {
-                 await widget.store.uploadPrescribe(context: context);
-                 widget.store.sendMessage = null;
-                 widget.store.prescribeController.appStore.modularPop();
+                 final bool sucess = await widget.store.uploadPrescribe(context: context);
+                 if(sucess) {
+                   widget.store.sendMessage = null;
+
+                   codeController.clear();
+                   widget.store.cleanDrugsSelected();
+                   widget.store.image = null;
+                   widget.store.code = '';
+                   widget.store.haveDrugSelected = false;
+
+                   widget.store.prescribeController.appStore.modularPop();
+                 }
                 },
                 elevation: 5,
                 backgroundColor: ColorsConstants.secundary,

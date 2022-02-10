@@ -8,6 +8,7 @@ import 'package:mobx/mobx.dart';
 import 'package:payback/app/src/core/models/api_response.model.dart';
 import 'package:payback/app/src/modules/home/controllers/prescribe/prescribe_controller.dart';
 import 'package:payback/app/src/modules/home/models/prescribe/drug_model.dart';
+import 'package:payback/app/src/modules/home/models/prescribe/prescribe_model.dart';
 import 'package:payback/app/src/modules/util/alert_awesome/alert_awesome_widget.dart';
 
 part 'prescribe_store.g.dart';
@@ -46,7 +47,7 @@ abstract class _PrescribeStoreBase with Store {
 
 //----------------------------------------------------------------------------
   @action
-  void setCode(String newCode) => code = newCode.trimRight();
+  void setCode(String newCode) => code = newCode.trim();
 
 //----------------------------------------------------------------------------
   @observable
@@ -56,9 +57,66 @@ abstract class _PrescribeStoreBase with Store {
   @observable
   List<DrugModel> drugs = [];
 
+  //----------------------------------------------------------------------------
+  @observable
+  List<PrescribeModel> prescribes = [];
+
 //----------------------------------------------------------------------------
   @observable
   bool haveDrugSelected = false;
+
+//----------------------------------------------------------------------------
+  Future<void> getAllPrescribes({required BuildContext context}) async {
+    ApiResponseModel? apiResponseModel =
+        await prescribeController.getAllPrescribes(context: context);
+
+    if (apiResponseModel?.statusCode == 200) {
+      prescribes = apiResponseModel?.data.map<PrescribeModel>((e) {
+        return PrescribeModel.fromJson(e);
+      }).toList();
+    } else {
+      sendMessage = null;
+      isLoading = false;
+      awesomeDialogWidget(
+          context: context,
+          animType: AnimType.SCALE,
+          dialogType: DialogType.NO_HEADER,
+          text: apiResponseModel?.data['messages'][0]['message'],
+          title: apiResponseModel?.data['title'],
+          borderColor: Colors.red,
+          buttonColor: Colors.red.shade800,
+          btnOkOnPress: () {});
+    }
+  }
+
+//----------------------------------------------------------------------------
+  Future<void> deletePrescribeByCode({
+    required BuildContext context,
+    required int companyId,
+    required int prescriptionId,
+  }) async {
+    ApiResponseModel? apiResponseModel =
+        await prescribeController.deletePrescribeByCode(
+            context: context,
+            companyId: companyId,
+            prescriptionId: prescriptionId);
+
+    if (apiResponseModel?.statusCode == 200) {
+      getAllPrescribes(context: context);
+    } else {
+      sendMessage = null;
+      isLoading = false;
+      awesomeDialogWidget(
+          context: context,
+          animType: AnimType.SCALE,
+          dialogType: DialogType.NO_HEADER,
+          text: apiResponseModel?.data['messages'][0]['message'],
+          title: apiResponseModel?.data['title'],
+          borderColor: Colors.red,
+          buttonColor: Colors.red.shade800,
+          btnOkOnPress: () {});
+    }
+  }
 
 //----------------------------------------------------------------------------
   Future<void> getAllDrugs({required BuildContext context}) async {
@@ -67,8 +125,7 @@ abstract class _PrescribeStoreBase with Store {
 
     if (apiResponseModel?.statusCode == 200) {
       drugs = apiResponseModel?.data.map<DrugModel>((e) {
-        final drug = DrugModel.fromJson(e);
-        return drug;
+        return DrugModel.fromJson(e);
       }).toList();
     } else {
       sendMessage = null;
@@ -191,6 +248,7 @@ abstract class _PrescribeStoreBase with Store {
         sendMessage = 'Imagem eviada';
         isLoading = false;
         sendMessage = null;
+        getAllPrescribes(context: context);
         return true;
       } else {
         isLoading = false;
@@ -244,7 +302,7 @@ abstract class _PrescribeStoreBase with Store {
               String percent = (send / total * 100).toStringAsFixed(2);
               sendMessage = '$percent%';
             });
-    if (apiResponseModel?.statusCode == 200) {
+    if (apiResponseModel?.statusCode == 201) {
       isLoading = false;
       return true;
     } else {

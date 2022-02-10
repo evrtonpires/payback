@@ -7,7 +7,7 @@ class DrugModel {
   final int id;
   final String name;
   final String activePrinciple;
-  final String logoUrl;
+  final String? logoUrl;
   final int dots;
   final int distributorId;
   late bool isSelect;

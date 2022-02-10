@@ -49,12 +49,15 @@ class PrescribeRepository implements IPrescribeRepository {
 
 //----------------------------------------------------------------------------
   @override
-  Future<ApiResponseModel?> deletePrescribe({required context}) async {
+  Future<ApiResponseModel?> deletePrescribe({
+    required context,
+    required int companyId,
+    required int prescriptionId,
+  }) async {
     try {
       ApiResponseModel response = await _api.call(
-          type: EApiType.post,
-          url: ApiRoutes.deletePrescriptionByCode(1),
-          data: {},
+          type: EApiType.delete,
+          url: ApiRoutes.deletePrescriptionByCode(companyId,prescriptionId),
           headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ${Modular.get<AppStore>().token}'
@@ -107,14 +110,11 @@ class PrescribeRepository implements IPrescribeRepository {
   @override
   Future<ApiResponseModel?> getAllPrescribes({required context}) async {
     try {
-      ApiResponseModel response = await _api.call(
-          type: EApiType.post,
-          url: ApiRoutes.getPrescriptions,
-          data: {},
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ${Modular.get<AppStore>().token}'
-          }).catchError((e) {
+      ApiResponseModel response = await _api
+          .call(type: EApiType.get, url: ApiRoutes.getPrescriptions, headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${Modular.get<AppStore>().token}'
+      }).catchError((e) {
         awesomeDialogWidget(
             context: context,
             animType: AnimType.SCALE,
@@ -136,13 +136,11 @@ class PrescribeRepository implements IPrescribeRepository {
   @override
   Future<ApiResponseModel?> getAllDrugs({required context}) async {
     try {
-      ApiResponseModel response = await _api.call(
-          type: EApiType.get,
-          url: ApiRoutes.getDrugs,
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ${Modular.get<AppStore>().token}'
-          }).catchError((e) {
+      ApiResponseModel response = await _api
+          .call(type: EApiType.get, url: ApiRoutes.getDrugs, headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${Modular.get<AppStore>().token}'
+      }).catchError((e) {
         awesomeDialogWidget(
             context: context,
             animType: AnimType.SCALE,

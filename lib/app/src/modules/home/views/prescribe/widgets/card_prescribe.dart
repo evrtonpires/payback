@@ -1,11 +1,24 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:payback/app/src/modules/home/models/prescribe/prescribe_model.dart';
+import 'package:payback/app/src/modules/home/stores/prescribe/prescribe_store.dart';
 import 'package:payback/app/src/modules/util/colors/colors.dart';
 import 'package:payback/app/src/modules/util/constants/icons_constants.dart';
 
 class CardPrecribe extends StatelessWidget {
-  const CardPrecribe({Key? key}) : super(key: key);
+  const CardPrecribe({Key? key, required this.prescribe, required this.store})
+      : super(key: key);
+
+  final PrescribeModel prescribe;
+  final PrescribeStore store;
+
+  String getDateFormat() {
+    String ano = prescribe.created_at.substring(0, 4);
+    String mes = prescribe.created_at.substring(5, 7);
+    String dia = prescribe.created_at.substring(8, 10);
+
+    return '$dia/$mes/$ano';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +39,10 @@ class CardPrecribe extends StatelessWidget {
             children: [
               SvgPicture.asset(
                 IconConstant.iconDoc,
-                height: MediaQuery.of(context).size.height * .05,
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height * .05,
               ),
               const SizedBox(
                 width: 10,
@@ -36,14 +52,16 @@ class CardPrecribe extends StatelessWidget {
                 children: [
                   RichText(
                     text: TextSpan(
-                      style: DefaultTextStyle.of(context).style,
-                      children: const <TextSpan>[
-                        TextSpan(
+                      style: DefaultTextStyle
+                          .of(context)
+                          .style,
+                      children: <TextSpan>[
+                        const TextSpan(
                             text: 'Código:',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: ColorsConstants.primary)),
-                        TextSpan(text: ' 13123'),
+                        TextSpan(text: ' ${prescribe.code}'),
                       ],
                     ),
                   ),
@@ -52,30 +70,37 @@ class CardPrecribe extends StatelessWidget {
                   ),
                   RichText(
                     text: TextSpan(
-                      style: DefaultTextStyle.of(context).style,
-                      children: const <TextSpan>[
-                        TextSpan(
+                      style: DefaultTextStyle
+                          .of(context)
+                          .style,
+                      children: <TextSpan>[
+                        const TextSpan(
                             text: 'Data de Cadastro:',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: ColorsConstants.primary)),
-                        TextSpan(text: ' 12/01/2022'),
+                        TextSpan(text: ' ${getDateFormat()}'),
                       ],
                     ),
                   ),
                 ],
               ),
               const Expanded(child: SizedBox()),
-              IconButton(
-                icon: const Icon(Icons.edit, color: ColorsConstants.pretoSGS),
-                onPressed: () {},
-              ),
+              // IconButton(
+              //   icon: const Icon(Icons.edit, color: ColorsConstants.pretoSGS),
+              //   onPressed: () {},
+              // ),
               IconButton(
                 icon: const Icon(
                   Icons.delete_forever,
                   color: ColorsConstants.redBlood,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  store.deletePrescribeByCode(context: context,
+                      companyId: store.prescribeController.appStore.userModel
+                          !.companyId,
+                      prescriptionId: prescribe.id);
+                },
               ),
             ],
           ),

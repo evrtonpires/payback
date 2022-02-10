@@ -5,6 +5,7 @@ import 'package:payback/app/src/modules/home/stores/prescribe/prescribe_store.da
 
 import 'controllers/prescribe/prescribe_controller.dart';
 import 'stores/home_store.dart';
+import 'stores/point/point_store.dart';
 
 class HomeModule extends Module {
   @override
@@ -13,6 +14,7 @@ class HomeModule extends Module {
     Bind((i) => PrescribeRepository(i.get())),
     Bind((i) => PrescribeController(i.get(), i.get())),
     Bind((i) => PrescribeStore(prescribeController: i.get())),
+    Bind((i) => PointStore(prescribeStore: i.get())),
   ];
 
   @override

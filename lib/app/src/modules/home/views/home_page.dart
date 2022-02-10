@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:payback/app/src/modules/home/stores/point/point_store.dart';
 import 'package:payback/app/src/modules/home/stores/prescribe/prescribe_store.dart';
 import 'package:payback/app/src/modules/home/views/point/point_page.dart';
 import 'package:payback/app/src/modules/home/views/prescribe/prescribe_page.dart';
-import 'package:payback/app/src/modules/home/views/remedy/remedy_page.dart';
 
 import '../../../modules/util/constants/icons_constants.dart';
 import '../../util/colors/colors.dart';
@@ -12,9 +12,12 @@ import '../stores/home_store.dart';
 import 'widgets/tab_widget.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.prescribeStore}) : super(key: key);
+  const HomePage(
+      {Key? key, required this.prescribeStore, required this.pointStore})
+      : super(key: key);
 
   final PrescribeStore prescribeStore;
+  final PointStore pointStore;
 
   @override
   HomePageState createState() => HomePageState();
@@ -28,8 +31,9 @@ class HomePageState extends ModularState<HomePage, HomeStore>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
     _pageController = PageController(initialPage: 0);
+    widget.prescribeStore.getAllPrescribes(context: context);
     widget.prescribeStore.getAllDrugs(context: context);
   }
 
@@ -67,11 +71,6 @@ class HomePageState extends ModularState<HomePage, HomeStore>
                       curve: Curves.bounceInOut);
                 }
                 if (page == 1) {
-                  _pageController.animateToPage(1,
-                      duration: const Duration(milliseconds: 250),
-                      curve: Curves.bounceInOut);
-                }
-                if (page == 2) {
                   _pageController.animateToPage(2,
                       duration: const Duration(milliseconds: 250),
                       curve: Curves.bounceInOut);
@@ -82,9 +81,6 @@ class HomePageState extends ModularState<HomePage, HomeStore>
                 TabWidget(
                     iconPath: IconConstant.iconDoc,
                     titlePath: 'telaHome.receitas'),
-                TabWidget(
-                    iconPath: IconConstant.iconDroug,
-                    titlePath: 'telaHome.remedios'),
                 TabWidget(
                     iconPath: IconConstant.iconDash,
                     titlePath: 'telaHome.pontos'),
@@ -100,8 +96,7 @@ class HomePageState extends ModularState<HomePage, HomeStore>
             physics: const NeverScrollableScrollPhysics(),
             children: [
               PrescribePage(prescribeStore: widget.prescribeStore),
-              const RemedyPage(),
-              const PointPage(),
+              PointPage(pointStore: widget.pointStore),
             ],
           ),
         ),

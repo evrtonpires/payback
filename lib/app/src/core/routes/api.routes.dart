@@ -55,8 +55,8 @@ class ApiRoutes {
   static String getPrescriptionByCode(int idPrescription) =>
       "Prescription/$idPrescription";
 
-  static String deletePrescriptionByCode(int idPrescription) =>
-      "Prescription/$idPrescription";
+  static String deletePrescriptionByCode(int companyId,int idPrescription) =>
+      "Prescription/$companyId/$idPrescription";
 
 //----------------------------------------------------------------------------
 

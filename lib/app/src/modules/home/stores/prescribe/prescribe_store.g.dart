@@ -116,6 +116,21 @@ mixin _$PrescribeStore on _PrescribeStoreBase, Store {
     });
   }
 
+  final _$prescribesAtom = Atom(name: '_PrescribeStoreBase.prescribes');
+
+  @override
+  List<PrescribeModel> get prescribes {
+    _$prescribesAtom.reportRead();
+    return super.prescribes;
+  }
+
+  @override
+  set prescribes(List<PrescribeModel> value) {
+    _$prescribesAtom.reportWrite(value, super.prescribes, () {
+      super.prescribes = value;
+    });
+  }
+
   final _$haveDrugSelectedAtom =
       Atom(name: '_PrescribeStoreBase.haveDrugSelected');
 
@@ -156,6 +171,7 @@ code: ${code},
 messageCodeError: ${messageCodeError},
 listDrugSelected: ${listDrugSelected},
 drugs: ${drugs},
+prescribes: ${prescribes},
 haveDrugSelected: ${haveDrugSelected}
     ''';
   }

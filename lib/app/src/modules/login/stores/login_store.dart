@@ -38,7 +38,7 @@ abstract class LoginStoreBase with Store {
 
   //----------------------------------------------------------------------------
   @action
-  void setCnpj(String newCnpj) => cnpj = newCnpj.trimRight();
+  void setCnpj(String newCnpj) => cnpj = newCnpj.trim();
 
   //----------------------------------------------------------------------------
   @observable
@@ -51,7 +51,7 @@ abstract class LoginStoreBase with Store {
 
   //----------------------------------------------------------------------------
   @action
-  void setLogin(String newUser) => user = newUser.trimRight();
+  void setLogin(String newUser) => user = newUser.trim();
 
   //----------------------------------------------------------------------------
   @observable
@@ -63,7 +63,7 @@ abstract class LoginStoreBase with Store {
 
   //----------------------------------------------------------------------------
   @action
-  void setPassword(String newPassword) => password = newPassword.trimRight();
+  void setPassword(String newPassword) => password = newPassword.trim();
 
   //----------------------------------------------------------------------------
   @observable
