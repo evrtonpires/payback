@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:payback/app/src/modules/home/stores/prescribe/prescribe_store.dart';
 import 'package:payback/app/src/modules/util/colors/colors.dart';
 import 'package:payback/app/src/modules/util/constants/icons_constants.dart';
@@ -62,8 +61,7 @@ class _DrugPageState extends State<DrugPage> {
                               Text(widget.store.drugs[index].activePrinciple),
                           leading: (widget.store.drugs[index].logoUrl == null || widget.store.drugs[index].logoUrl!.isEmpty)
                               ? Image.asset(
-                                  IconConstant.photography,
-                                  color: ColorsConstants.primary,
+                            IconConstant.defaultDistributor
                                 )
                               : Image.network(
                                   widget.store.drugs[index].logoUrl!),

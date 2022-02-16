@@ -79,11 +79,13 @@ class HomePageState extends ModularState<HomePage, HomeStore>
               controller: _tabController,
               tabs: [
                 TabWidget(
-                    iconPath: IconConstant.iconDoc,
-                    titlePath: 'telaHome.receitas'),
+                  iconPath: IconConstant.iconDoc,
+                  titlePath: 'telaHome.receitas',
+                ),
                 TabWidget(
-                    iconPath: IconConstant.iconDash,
-                    titlePath: 'telaHome.pontos'),
+                  iconPath: IconConstant.iconDash,
+                  titlePath: 'telaHome.pontos',
+                ),
               ],
               indicatorColor: ColorsConstants.laranjaSGS,
               labelStyle: const TextStyle(fontWeight: FontWeight.bold),

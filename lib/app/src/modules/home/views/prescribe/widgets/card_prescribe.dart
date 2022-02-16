@@ -13,9 +13,9 @@ class CardPrecribe extends StatelessWidget {
   final PrescribeStore store;
 
   String getDateFormat() {
-    String ano = prescribe.created_at.substring(0, 4);
-    String mes = prescribe.created_at.substring(5, 7);
-    String dia = prescribe.created_at.substring(8, 10);
+    String? ano = prescribe.created_at.substring(0, 4);
+    String? mes = prescribe.created_at.substring(5, 7);
+    String? dia = prescribe.created_at.substring(8, 10);
 
     return '$dia/$mes/$ano';
   }
@@ -96,10 +96,13 @@ class CardPrecribe extends StatelessWidget {
                   color: ColorsConstants.redBlood,
                 ),
                 onPressed: () {
-                  store.deletePrescribeByCode(context: context,
-                      companyId: store.prescribeController.appStore.userModel
-                          !.companyId,
-                      prescriptionId: prescribe.id);
+
+                    store.deletePrescribeByCode(
+                        context: context,
+                        companyId: store
+                            .prescribeController.appStore.userModel!.companyId,
+                        prescriptionId: prescribe.id);
+
                 },
               ),
             ],

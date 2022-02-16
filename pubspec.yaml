@@ -57,6 +57,7 @@ dependencies:
   # S
   shared_preferences: 2.0.6
   share: 2.0.4
+  skeletons: 0.0.3
 
   # U
   uuid: 3.0.4

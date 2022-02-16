@@ -9,6 +9,21 @@ part of 'prescribe_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$PrescribeStore on _PrescribeStoreBase, Store {
+  final _$isGetDataAtom = Atom(name: '_PrescribeStoreBase.isGetData');
+
+  @override
+  bool get isGetData {
+    _$isGetDataAtom.reportRead();
+    return super.isGetData;
+  }
+
+  @override
+  set isGetData(bool value) {
+    _$isGetDataAtom.reportWrite(value, super.isGetData, () {
+      super.isGetData = value;
+    });
+  }
+
   final _$isLoadingAtom = Atom(name: '_PrescribeStoreBase.isLoading');
 
   @override
@@ -164,6 +179,7 @@ mixin _$PrescribeStore on _PrescribeStoreBase, Store {
   @override
   String toString() {
     return '''
+isGetData: ${isGetData},
 isLoading: ${isLoading},
 sendMessage: ${sendMessage},
 image: ${image},

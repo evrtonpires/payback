@@ -27,6 +27,11 @@ abstract class _PrescribeStoreBase with Store {
 
 //----------------------------------------------------------------------------
   @observable
+  bool isGetData = true;
+
+
+//----------------------------------------------------------------------------
+  @observable
   bool isLoading = false;
 
 //----------------------------------------------------------------------------
@@ -67,6 +72,7 @@ abstract class _PrescribeStoreBase with Store {
 
 //----------------------------------------------------------------------------
   Future<void> getAllPrescribes({required BuildContext context}) async {
+    isGetData = true;
     ApiResponseModel? apiResponseModel =
         await prescribeController.getAllPrescribes(context: context);
 
@@ -87,6 +93,7 @@ abstract class _PrescribeStoreBase with Store {
           buttonColor: Colors.red.shade800,
           btnOkOnPress: () {});
     }
+    isGetData = false;
   }
 
 //----------------------------------------------------------------------------

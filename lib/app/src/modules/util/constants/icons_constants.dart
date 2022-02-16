@@ -17,18 +17,15 @@ abstract class IconConstant {
 
   static String get logoWide => 'assets/icon/logo_wide.svg';
 
-  static String get photography => 'assets/icon/photography.png';
+  static String get defaultDistributor => 'assets/icon/default_distributor.png';
 
-  static String get logoSplash => 'assets/icon/splash_art/logo_splash.svg';
+  static String get noContentPrescriptionPng => 'assets/icon/no_content_prescription.png';
+
+  static String get photography => 'assets/icon/photography.png';
 
   //----------------------------------------------------------------------------
 
-  static String get loadingSvg => 'assets/icon/load/icon_app_loading.svg';
-
   static String get noConnection => 'assets/icon/load/no_connection.svg';
 
-//----------------------------------------------------------------------------
-  static String get backgroundSvgFirstPet =>
-      'assets/icon/splash_art/bgpatas.svg';
 //----------------------------------------------------------------------------
 }
