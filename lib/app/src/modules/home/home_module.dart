@@ -1,11 +1,11 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:payback/app/src/modules/home/home_routing.dart';
 import 'package:payback/app/src/modules/home/repositories/prescribe/prescribe_repository.dart';
+import 'package:payback/app/src/modules/home/stores/distributors/distributors_store.dart';
 import 'package:payback/app/src/modules/home/stores/prescribe/prescribe_store.dart';
 
 import 'controllers/prescribe/prescribe_controller.dart';
 import 'stores/home_store.dart';
-import 'stores/point/point_store.dart';
 
 class HomeModule extends Module {
   @override
@@ -14,7 +14,7 @@ class HomeModule extends Module {
     Bind((i) => PrescribeRepository(i.get())),
     Bind((i) => PrescribeController(i.get(), i.get())),
     Bind((i) => PrescribeStore(prescribeController: i.get())),
-    Bind((i) => PointStore(prescribeStore: i.get())),
+    Bind((i) => DistributorsStore(prescribeStore: i.get())),
   ];
 
   @override

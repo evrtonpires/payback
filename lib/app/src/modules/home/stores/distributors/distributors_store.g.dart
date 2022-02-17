@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'point_store.dart';
+part of 'distributors_store.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,8 +8,8 @@ part of 'point_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$PointStore on _PointStoreBase, Store {
-  final _$totalPointAtom = Atom(name: '_PointStoreBase.totalPoint');
+mixin _$DistributorsStore on _DistributorsStoreBase, Store {
+  final _$totalPointAtom = Atom(name: '_DistributorsStoreBase.totalPoint');
 
   @override
   int get totalPoint {
@@ -24,28 +24,17 @@ mixin _$PointStore on _PointStoreBase, Store {
     });
   }
 
-  final _$_PointStoreBaseActionController =
-      ActionController(name: '_PointStoreBase');
-
-  @override
-  void totalPoints() {
-    final _$actionInfo = _$_PointStoreBaseActionController.startAction(
-        name: '_PointStoreBase.totalPoints');
-    try {
-      return super.totalPoints();
-    } finally {
-      _$_PointStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
+  final _$_DistributorsStoreBaseActionController =
+      ActionController(name: '_DistributorsStoreBase');
 
   @override
   int getUndDrugs(int idDrug) {
-    final _$actionInfo = _$_PointStoreBaseActionController.startAction(
-        name: '_PointStoreBase.getUndDrugs');
+    final _$actionInfo = _$_DistributorsStoreBaseActionController.startAction(
+        name: '_DistributorsStoreBase.getUndDrugs');
     try {
       return super.getUndDrugs(idDrug);
     } finally {
-      _$_PointStoreBaseActionController.endAction(_$actionInfo);
+      _$_DistributorsStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 

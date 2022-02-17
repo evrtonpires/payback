@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:payback/app/src/modules/home/stores/point/point_store.dart';
+import 'package:payback/app/src/modules/home/stores/distributors/distributors_store.dart';
 import 'package:payback/app/src/modules/home/stores/prescribe/prescribe_store.dart';
-import 'package:payback/app/src/modules/home/views/point/point_page.dart';
 import 'package:payback/app/src/modules/home/views/prescribe/prescribe_page.dart';
 
 import '../../../modules/util/constants/icons_constants.dart';
 import '../../util/colors/colors.dart';
 import '../stores/home_store.dart';
+import 'distributors/distributors_page.dart';
 import 'widgets/tab_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage(
-      {Key? key, required this.prescribeStore, required this.pointStore})
+      {Key? key, required this.prescribeStore, required this.distributorsStore})
       : super(key: key);
 
   final PrescribeStore prescribeStore;
-  final PointStore pointStore;
+  final DistributorsStore distributorsStore;
 
   @override
   HomePageState createState() => HomePageState();
@@ -84,7 +84,7 @@ class HomePageState extends ModularState<HomePage, HomeStore>
                 ),
                 TabWidget(
                   iconPath: IconConstant.iconDash,
-                  titlePath: 'telaHome.pontos',
+                  titlePath: 'telaHome.dristibutors',
                 ),
               ],
               indicatorColor: ColorsConstants.laranjaSGS,
@@ -98,7 +98,8 @@ class HomePageState extends ModularState<HomePage, HomeStore>
             physics: const NeverScrollableScrollPhysics(),
             children: [
               PrescribePage(prescribeStore: widget.prescribeStore),
-              PointPage(pointStore: widget.pointStore),
+              DistributorsPage(distributorsStore: widget.distributorsStore),
+              
             ],
           ),
         ),

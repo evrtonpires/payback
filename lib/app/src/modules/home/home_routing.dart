@@ -11,13 +11,14 @@ class HomeRouting {
       HomeRouteNamed.home._path!,
       child: (_, args) => HomePage(
         prescribeStore: Modular.get(),
-        pointStore: Modular.get(),
+        distributorsStore: Modular.get(),
       ),
     ),
     ChildRoute(
       HomeRouteNamed.addPrescribe._path!,
       child: (_, args) => AddPrescribePage(
         store: Modular.get(),
+        prescribe: args.data,
       ),
     ),  ChildRoute(
       HomeRouteNamed.selectDrugs._path!,

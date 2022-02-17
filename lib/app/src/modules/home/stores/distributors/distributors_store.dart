@@ -3,30 +3,17 @@ import 'package:payback/app/src/modules/home/models/prescribe/drug_model.dart';
 import 'package:payback/app/src/modules/home/models/prescribe/prescribe_model.dart';
 import 'package:payback/app/src/modules/home/stores/prescribe/prescribe_store.dart';
 
-part 'point_store.g.dart';
+part 'distributors_store.g.dart';
 
-class PointStore = _PointStoreBase with _$PointStore;
+class DistributorsStore = _DistributorsStoreBase with _$DistributorsStore;
 
-abstract class _PointStoreBase with Store {
-  _PointStoreBase({required this.prescribeStore});
+abstract class _DistributorsStoreBase with Store {
+  _DistributorsStoreBase({required this.prescribeStore});
 
   final PrescribeStore prescribeStore;
 
   @observable
   int totalPoint = 0;
-
-  @action
-  void totalPoints() {
-    totalPoint = prescribeStore.prescribes.fold(
-        0,
-        (int previousValue, element) =>
-            previousValue +
-            (element.drugs.fold(
-                    0,
-                    (int? previousValue2, element2) =>
-                        previousValue2! + element2.dots) ??
-                0));
-  }
 
   @action
   int getUndDrugs(int idDrug) {

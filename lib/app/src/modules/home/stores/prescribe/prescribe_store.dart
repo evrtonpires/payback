@@ -29,7 +29,6 @@ abstract class _PrescribeStoreBase with Store {
   @observable
   bool isGetData = true;
 
-
 //----------------------------------------------------------------------------
   @observable
   bool isLoading = false;
@@ -68,7 +67,24 @@ abstract class _PrescribeStoreBase with Store {
 
 //----------------------------------------------------------------------------
   @observable
+  List<PrescribeModel>? prescribesFilter;
+
+//----------------------------------------------------------------------------
+  @observable
   bool haveDrugSelected = false;
+
+//----------------------------------------------------------------------------
+  void filterPrescribes({required String text}) {
+    if (text.isEmpty) {
+      prescribesFilter = null;
+    } else {
+      prescribesFilter = [];
+      prescribesFilter!.addAll(prescribes.where((element) =>
+          element.id.toString() == text ||
+          element.companyId.toString() == text ||
+          element.code == text));
+    }
+  }
 
 //----------------------------------------------------------------------------
   Future<void> getAllPrescribes({required BuildContext context}) async {
@@ -179,6 +195,16 @@ abstract class _PrescribeStoreBase with Store {
   }
 
 //----------------------------------------------------------------------------
+  void checkDrugsSelected(List<DrugModel> drugsSelected) {
+    for (DrugModel drugSelected in drugsSelected) {
+      drugs.firstWhere((element) => element.id == drugSelected.id).isSelect =
+          true;
+    }
+    drugs = drugs;
+    haveDrugSelected = drugs.where((element) => element.isSelect).isNotEmpty;
+  }
+
+//----------------------------------------------------------------------------
   void cleanDrugsSelected() {
     listDrugSelected.clear();
     for (DrugModel drug in drugs) {
@@ -235,11 +261,13 @@ abstract class _PrescribeStoreBase with Store {
   }
 
 //----------------------------------------------------------------------------
-  addPrescribePage({required String rout, required BuildContext context}) {
+  addPrescribePage(
+      {required String rout, required BuildContext context, dynamic args}) {
     prescribeController.appStore.pushNamed(
         rout: rout,
         context: context,
         isReplacement: false,
+        args: args,
         isRootNavigator: true);
   }
 

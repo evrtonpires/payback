@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:payback/app/src/modules/home/models/prescribe/drug_model.dart';
-import 'package:payback/app/src/modules/home/stores/point/point_store.dart';
+import 'package:payback/app/src/modules/home/stores/distributors/distributors_store.dart';
 import 'package:payback/app/src/modules/util/colors/colors.dart';
 import 'package:payback/app/src/modules/util/constants/icons_constants.dart';
 
@@ -8,7 +8,7 @@ class CardDrug extends StatelessWidget {
   const CardDrug({Key? key, required this.drug,required this.store}) : super(key: key);
 
   final DrugModel drug;
-  final PointStore store;
+  final DistributorsStore store;
 
   @override
   Widget build(BuildContext context) {

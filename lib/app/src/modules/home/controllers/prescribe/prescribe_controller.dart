@@ -85,6 +85,43 @@ class PrescribeController {
 
   //----------------------------------------------------------------------------
 
+
+  Future<ApiResponseModel?> updatePrescribeByCode({
+    required context,
+    required int companyId,
+    required int prescriptionId,
+  }) async {
+    try {
+      var connectivityResult = await _appStore.checkConnectivity();
+
+      if (connectivityResult) {
+        ApiResponseModel? apiResponseModel =
+            await _prescribeRepository.updatePrescribe(
+          context: context,
+          // companyId: companyId,
+          // prescriptionId: prescriptionId,
+        );
+
+        return apiResponseModel;
+      } else {
+        awesomeDialogWidget(
+            context: context,
+            animType: AnimType.SCALE,
+            dialogType: DialogType.NO_HEADER,
+            title: 'Erro ao obter acesso',
+            text:
+                'Ops\nVerifique sua conexão com a internet e tente novamente.',
+            borderColor: Colors.red,
+            buttonColor: Colors.red.shade800,
+            btnOkOnPress: () {});
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  //----------------------------------------------------------------------------
+
   Future<ApiResponseModel?> getAllDrugs({
     required context,
   }) async {

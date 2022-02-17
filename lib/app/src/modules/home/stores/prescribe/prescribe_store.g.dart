@@ -146,6 +146,22 @@ mixin _$PrescribeStore on _PrescribeStoreBase, Store {
     });
   }
 
+  final _$prescribesFilterAtom =
+      Atom(name: '_PrescribeStoreBase.prescribesFilter');
+
+  @override
+  List<PrescribeModel>? get prescribesFilter {
+    _$prescribesFilterAtom.reportRead();
+    return super.prescribesFilter;
+  }
+
+  @override
+  set prescribesFilter(List<PrescribeModel>? value) {
+    _$prescribesFilterAtom.reportWrite(value, super.prescribesFilter, () {
+      super.prescribesFilter = value;
+    });
+  }
+
   final _$haveDrugSelectedAtom =
       Atom(name: '_PrescribeStoreBase.haveDrugSelected');
 
@@ -188,6 +204,7 @@ messageCodeError: ${messageCodeError},
 listDrugSelected: ${listDrugSelected},
 drugs: ${drugs},
 prescribes: ${prescribes},
+prescribesFilter: ${prescribesFilter},
 haveDrugSelected: ${haveDrugSelected}
     ''';
   }

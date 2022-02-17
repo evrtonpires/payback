@@ -78,11 +78,12 @@ abstract class _AppStoreBase with Store {
       {context,
       required String rout,
       bool isReplacement = true,
-      bool isRootNavigator = false}) async {
+      bool isRootNavigator = false,
+      dynamic args}) async {
     if (isReplacement) {
-      Modular.to.pushReplacementNamed(rout);
+      Modular.to.pushReplacementNamed(rout,arguments: args);
     } else {
-      Modular.to.pushNamed(rout, forRoot: isRootNavigator);
+      Modular.to.pushNamed(rout, forRoot: isRootNavigator,arguments: args);
     }
   }
 

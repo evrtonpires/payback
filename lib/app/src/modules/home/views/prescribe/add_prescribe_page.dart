@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:payback/app/src/modules/home/models/prescribe/prescribe_model.dart';
 import 'package:payback/app/src/modules/home/stores/prescribe/prescribe_store.dart';
 import 'package:payback/app/src/modules/util/colors/colors.dart';
 import 'package:payback/app/src/modules/util/constants/icons_constants.dart';
@@ -12,8 +13,10 @@ import 'package:payback/app/src/modules/util/widgets/text_field_with_validation_
 import '../../home_routing.dart';
 
 class AddPrescribePage extends StatefulWidget {
-  const AddPrescribePage({Key? key, required this.store}) : super(key: key);
+  const AddPrescribePage({Key? key, required this.store, this.prescribe})
+      : super(key: key);
   final PrescribeStore store;
+  final PrescribeModel? prescribe;
 
   @override
   _AddPrescribePageState createState() => _AddPrescribePageState();
@@ -30,13 +33,18 @@ class _AddPrescribePageState extends State<AddPrescribePage>
   late Animation animationWidth;
   TextEditingController codeController = TextEditingController();
 
-  int isStart = 0;
-
   @override
   void initState() {
     super.initState();
     animationController = AnimationController(
         duration: const Duration(milliseconds: 500), vsync: this);
+
+    if(widget.prescribe != null){
+      codeController.text = widget.prescribe!.code;
+      widget.store.code = widget.prescribe!.code;
+      widget.store.listDrugSelected.addAll(widget.prescribe!.drugs);
+      widget.store.checkDrugsSelected(widget.store.listDrugSelected);
+    }
   }
 
   @override
@@ -105,8 +113,8 @@ class _AddPrescribePageState extends State<AddPrescribePage>
         Scaffold(
           appBar: AppBar(
             title: Padding(
-              padding:
-                  EdgeInsets.only(top: MediaQuery.of(context).size.height * .01),
+              padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height * .01),
               child: const Text(
                 'Adicionar Receita',
                 style: TextStyle(
@@ -152,8 +160,8 @@ class _AddPrescribePageState extends State<AddPrescribePage>
                                       ColorsConstants.redBlood)),
                             ),
                             ElevatedButton(
-                              onPressed: widget
-                                  .store.prescribeController.appStore.modularPop,
+                              onPressed: widget.store.prescribeController
+                                  .appStore.modularPop,
                               child: const Text('Continuar'),
                               style: ButtonStyle(
                                   backgroundColor:
@@ -205,7 +213,8 @@ class _AddPrescribePageState extends State<AddPrescribePage>
                                         widget.store.codeValidate(context);
                                       },
                                       textInputAction: TextInputAction.done,
-                                      messageError: widget.store.messageCodeError,
+                                      messageError:
+                                          widget.store.messageCodeError,
                                       onValidator: () =>
                                           widget.store.codeValidate(context),
                                       onEditingComplete: () =>
@@ -216,15 +225,17 @@ class _AddPrescribePageState extends State<AddPrescribePage>
                                   Expanded(
                                     child: ListView(
                                       children: [
-                                        if (widget
-                                            .store.listDrugSelected.isNotEmpty) ...{
+                                        if (widget.store.listDrugSelected
+                                            .isNotEmpty) ...{
                                           ...widget.store.listDrugSelected
                                               .map((drug) {
                                             return Card(
                                               shape: RoundedRectangleBorder(
                                                 side: const BorderSide(
-                                                    color: ColorsConstants.primary),
-                                                borderRadius: BorderRadius.circular(
+                                                    color: ColorsConstants
+                                                        .primary),
+                                                borderRadius:
+                                                    BorderRadius.circular(
                                                   10,
                                                 ),
                                               ),
@@ -237,10 +248,12 @@ class _AddPrescribePageState extends State<AddPrescribePage>
                                                 trailing: IconButton(
                                                   icon: const Icon(
                                                     Icons.delete_forever,
-                                                    color: ColorsConstants.redBlood,
+                                                    color: ColorsConstants
+                                                        .redBlood,
                                                   ),
                                                   onPressed: () => widget.store
-                                                      .removeDrugsSelected(drug),
+                                                      .removeDrugsSelected(
+                                                          drug),
                                                 ),
                                               ),
                                             );
@@ -248,8 +261,8 @@ class _AddPrescribePageState extends State<AddPrescribePage>
                                         },
                                         InkWell(
                                           onTap: () {
-                                            widget
-                                                .store.prescribeController.appStore
+                                            widget.store.prescribeController
+                                                .appStore
                                                 .pushNamed(
                                                     rout: HomeRouteNamed
                                                         .selectDrugs.fullPath!,
@@ -267,14 +280,16 @@ class _AddPrescribePageState extends State<AddPrescribePage>
                                                   children: const [
                                                     Icon(
                                                       Icons.add,
-                                                      color: ColorsConstants.white,
+                                                      color:
+                                                          ColorsConstants.white,
                                                     ),
                                                     Text(
                                                       'Adicionar Medicamentos',
                                                       style: TextStyle(
-                                                        color:
-                                                            ColorsConstants.white,
-                                                        fontStyle: FontStyle.italic,
+                                                        color: ColorsConstants
+                                                            .white,
+                                                        fontStyle:
+                                                            FontStyle.italic,
                                                       ),
                                                     )
                                                   ],
@@ -299,181 +314,194 @@ class _AddPrescribePageState extends State<AddPrescribePage>
                       },
                     ),
                   ),
-                  Align(
-                    alignment: const Alignment(.9, .9),
-                    child: AnimatedBuilder(
-                      animation: animationController,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.15),
-                      ),
-                      builder: (context, child) {
-                        return Transform.translate(
-                          offset: Offset(0, animationTranslateIconButton.value),
-                          child: GestureDetector(
-                            onTap: () {
-                              if (widget.store.image == null &&
-                                  animationController.status ==
-                                      AnimationStatus.dismissed) {
-                                showModalBottomSheet(
-                                    backgroundColor: Colors.transparent,
-                                    context: context,
-                                    builder: (BuildContext bc) {
-                                      return Wrap(
-                                        alignment: WrapAlignment.center,
-                                        children: <Widget>[
-                                          GestureDetector(
-                                            child: Container(
-                                              padding: const EdgeInsets.all(15),
-                                              decoration: BoxDecoration(
-                                                color: ColorsConstants.primary,
-                                                borderRadius:
-                                                    const BorderRadius.only(
-                                                  topLeft: Radius.circular(30),
-                                                  topRight: Radius.circular(30),
+                  Visibility(
+                    visible: widget.prescribe == null,
+                    child: Align(
+                      alignment: const Alignment(.9, .9),
+                      child: AnimatedBuilder(
+                        animation: animationController,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.height * 0.15),
+                        ),
+                        builder: (context, child) {
+                          return Transform.translate(
+                            offset: Offset(0, animationTranslateIconButton.value),
+                            child: GestureDetector(
+                              onTap: () {
+                                if (widget.store.image == null &&
+                                    animationController.status ==
+                                        AnimationStatus.dismissed) {
+                                  showModalBottomSheet(
+                                      backgroundColor: Colors.transparent,
+                                      context: context,
+                                      builder: (BuildContext bc) {
+                                        return Wrap(
+                                          alignment: WrapAlignment.center,
+                                          children: <Widget>[
+                                            GestureDetector(
+                                              child: Container(
+                                                padding: const EdgeInsets.all(15),
+                                                decoration: BoxDecoration(
+                                                  color: ColorsConstants.primary,
+                                                  borderRadius:
+                                                      const BorderRadius.only(
+                                                    topLeft: Radius.circular(30),
+                                                    topRight: Radius.circular(30),
+                                                  ),
+                                                  border: Border.all(
+                                                      color: ColorsConstants
+                                                          .secundary),
                                                 ),
-                                                border: Border.all(
-                                                    color:
-                                                        ColorsConstants.secundary),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: const [
+                                                    Icon(
+                                                      Icons.camera_alt,
+                                                      color:
+                                                          ColorsConstants.white,
+                                                    ),
+                                                    SizedBox(width: 10),
+                                                    Text(
+                                                      'Camera',
+                                                      style: TextStyle(
+                                                          color: ColorsConstants
+                                                              .white),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: const [
-                                                  Icon(
-                                                    Icons.camera_alt,
-                                                    color: ColorsConstants.white,
-                                                  ),
-                                                  SizedBox(width: 10),
-                                                  Text(
-                                                    'Camera',
-                                                    style: TextStyle(
-                                                        color:
-                                                            ColorsConstants.white),
-                                                  ),
-                                                ],
-                                              ),
+                                              onTap: () async {
+                                                File? haveImage = await widget
+                                                    .store
+                                                    .addImagePrescribeCamera();
+                                                if (haveImage != null) {
+                                                  animationController
+                                                      .forward()
+                                                      .whenComplete(() {
+                                                    widget.store.image =
+                                                        haveImage;
+                                                  });
+                                                }
+                                              },
                                             ),
-                                            onTap: () async {
-                                              File? haveImage = await widget.store
-                                                  .addImagePrescribeCamera();
-                                              if (haveImage != null) {
-                                                animationController
-                                                    .forward()
-                                                    .whenComplete(() {
-                                                  widget.store.image = haveImage;
-                                                });
-                                              }
-                                            },
-                                          ),
-                                          GestureDetector(
-                                            child: Container(
-                                              padding: const EdgeInsets.all(15),
-                                              color: ColorsConstants.primary,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: const [
-                                                  Icon(
-                                                    Icons.broken_image_rounded,
-                                                    color: ColorsConstants.white,
-                                                  ),
-                                                  SizedBox(width: 10),
-                                                  Text(
-                                                    'Galeria',
-                                                    style: TextStyle(
-                                                        color:
-                                                            ColorsConstants.white),
-                                                  ),
-                                                ],
+                                            GestureDetector(
+                                              child: Container(
+                                                padding: const EdgeInsets.all(15),
+                                                color: ColorsConstants.primary,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: const [
+                                                    Icon(
+                                                      Icons.broken_image_rounded,
+                                                      color:
+                                                          ColorsConstants.white,
+                                                    ),
+                                                    SizedBox(width: 10),
+                                                    Text(
+                                                      'Galeria',
+                                                      style: TextStyle(
+                                                          color: ColorsConstants
+                                                              .white),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
+                                              onTap: () async {
+                                                File? haveImage = await widget
+                                                    .store
+                                                    .addImagePrescribeGallery();
+                                                if (haveImage != null) {
+                                                  animationController
+                                                      .forward()
+                                                      .whenComplete(() {
+                                                    widget.store.image =
+                                                        haveImage;
+                                                  });
+                                                }
+                                              },
                                             ),
-                                            onTap: () async {
-                                              File? haveImage = await widget.store
-                                                  .addImagePrescribeGallery();
-                                              if (haveImage != null) {
-                                                animationController
-                                                    .forward()
-                                                    .whenComplete(() {
-                                                  widget.store.image = haveImage;
-                                                });
-                                              }
+                                          ],
+                                        );
+                                      });
+                                }
+                                else {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          contentPadding:
+                                              const EdgeInsets.all(10),
+                                          shape: const RoundedRectangleBorder(
+                                            side: BorderSide(
+                                              color: Color(0xff000000),
+                                              width: 0,
+                                              style: BorderStyle.none,
+                                            ),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(20.0)),
+                                          ),
+                                          content: SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.8,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  1,
+                                              child: Image.file(
+                                                widget.store.image!,
+                                                fit: BoxFit.cover,
+                                              )),
+                                        );
+                                      });
+                                }
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: ColorsConstants.primary,
+                                  borderRadius: BorderRadius.circular(
+                                      animationBorderRadius.value),
+                                  image: widget.store.image == null
+                                      ? null
+                                      : DecorationImage(
+                                          image: FileImage(widget.store.image!),
+                                          fit: BoxFit.fitWidth),
+                                ),
+                                height: animationHeight.value,
+                                width: animationWidth.value,
+                                child: widget.store.image == null
+                                    ? const Icon(
+                                        Icons.camera_enhance,
+                                        color: ColorsConstants.white,
+                                      )
+                                    : Align(
+                                        alignment: Alignment.bottomRight,
+                                        child: Card(
+                                          color: ColorsConstants.redBlood,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(50)),
+                                          child: IconButton(
+                                            onPressed: () {
+                                              widget.store.image = null;
+                                              animationController.reverse();
                                             },
-                                          ),
-                                        ],
-                                      );
-                                    });
-                              } else {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        contentPadding: const EdgeInsets.all(10),
-                                        shape: const RoundedRectangleBorder(
-                                          side: BorderSide(
-                                            color: Color(0xff000000),
-                                            width: 0,
-                                            style: BorderStyle.none,
-                                          ),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(20.0)),
-                                        ),
-                                        content: SizedBox(
-                                            height:
-                                                MediaQuery.of(context).size.height *
-                                                    0.8,
-                                            width:
-                                                MediaQuery.of(context).size.width *
-                                                    1,
-                                            child: Image.file(
-                                              widget.store.image!,
-                                              fit: BoxFit.cover,
-                                            )),
-                                      );
-                                    });
-                              }
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: ColorsConstants.primary,
-                                borderRadius: BorderRadius.circular(
-                                    animationBorderRadius.value),
-                                image: widget.store.image == null
-                                    ? null
-                                    : DecorationImage(
-                                        image: FileImage(widget.store.image!),
-                                        fit: BoxFit.fitWidth),
-                              ),
-                              height: animationHeight.value,
-                              width: animationWidth.value,
-                              child: widget.store.image == null
-                                  ? const Icon(
-                                      Icons.camera_enhance,
-                                      color: ColorsConstants.white,
-                                    )
-                                  : Align(
-                                      alignment: Alignment.bottomRight,
-                                      child: Card(
-                                        color: ColorsConstants.redBlood,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(50)),
-                                        child: IconButton(
-                                          onPressed: () {
-                                            widget.store.image = null;
-                                            animationController.reverse();
-                                          },
-                                          icon: const Icon(
-                                            Icons.delete_forever,
-                                            color: ColorsConstants.white,
+                                            icon: const Icon(
+                                              Icons.delete_forever,
+                                              color: ColorsConstants.white,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
+                              ),
                             ),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     ),
                   )
                 ],
@@ -482,23 +510,24 @@ class _AddPrescribePageState extends State<AddPrescribePage>
           ),
           floatingActionButton: Observer(
             builder: (context) => Visibility(
-              visible: widget.store.image != null &&
+              visible: ((widget.prescribe != null || widget.store.image != null) &&
                   widget.store.messageCodeError == null &&
-                  widget.store.listDrugSelected.isNotEmpty,
+                  widget.store.listDrugSelected.isNotEmpty),
               child: FloatingActionButton(
                 onPressed: () async {
-                 final bool sucess = await widget.store.uploadPrescribe(context: context);
-                 if(sucess) {
-                   widget.store.sendMessage = null;
+                  final bool sucess =
+                      await widget.store.uploadPrescribe(context: context);
+                  if (sucess) {
+                    widget.store.sendMessage = null;
 
-                   codeController.clear();
-                   widget.store.cleanDrugsSelected();
-                   widget.store.image = null;
-                   widget.store.code = '';
-                   widget.store.haveDrugSelected = false;
+                    codeController.clear();
+                    widget.store.cleanDrugsSelected();
+                    widget.store.image = null;
+                    widget.store.code = '';
+                    widget.store.haveDrugSelected = false;
 
-                   widget.store.prescribeController.appStore.modularPop();
-                 }
+                    widget.store.prescribeController.appStore.modularPop();
+                  }
                 },
                 elevation: 5,
                 backgroundColor: ColorsConstants.secundary,

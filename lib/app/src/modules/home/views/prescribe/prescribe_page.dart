@@ -33,7 +33,9 @@ class PrescribePageState extends State<PrescribePage> {
           skeleton: ListView.builder(
               itemCount: 15,
               itemBuilder: (_, index) {
-                return Container(height: 50,);
+                return Container(
+                  height: 50,
+                );
               }),
           child: Stack(children: [
             Visibility(
@@ -74,15 +76,27 @@ class PrescribePageState extends State<PrescribePage> {
                   ),
                 ),
               ),
-              child: ListView.builder(
-                  itemCount: widget.prescribeStore.prescribes.length,
-                  itemBuilder: (_, index) {
-                    final prescribe = widget.prescribeStore.prescribes[index];
-                    return CardPrecribe(
-                      prescribe: prescribe,
-                      store: widget.prescribeStore,
-                    );
-                  }),
+              child: Visibility(
+                visible: !(widget.prescribeStore.prescribesFilter != null &&
+                    widget.prescribeStore.prescribesFilter!.isEmpty),
+                replacement: const Center(
+                  child: Text('Nenhuma receita foi encontrada!'),
+                ),
+                child: ListView.builder(
+                    itemCount: widget.prescribeStore.prescribesFilter == null
+                        ? widget.prescribeStore.prescribes.length
+                        : widget.prescribeStore.prescribesFilter!.length,
+                    itemBuilder: (_, index) {
+                      final prescribe =
+                          widget.prescribeStore.prescribesFilter == null
+                              ? widget.prescribeStore.prescribes[index]
+                              : widget.prescribeStore.prescribesFilter![index];
+                      return CardPrecribe(
+                        prescribe: prescribe,
+                        store: widget.prescribeStore,
+                      );
+                    }),
+              ),
             ),
             Align(
                 alignment: const Alignment(.9, .9),
@@ -93,11 +107,19 @@ class PrescribePageState extends State<PrescribePage> {
                         builder: (context) {
                           return const SearchDialog();
                         });
-                    if (valorPesquisado != null) {}
+                    if (valorPesquisado != null) {
+                      widget.prescribeStore
+                          .filterPrescribes(text: valorPesquisado);
+                    }
                   },
                   addOnTap: () => widget.prescribeStore.addPrescribePage(
                       rout: HomeRouteNamed.addPrescribe.fullPath!,
                       context: context),
+                  cleanFilter: (){
+                    widget.prescribeStore.prescribesFilter = null;
+                  },
+                  isNull: widget.prescribeStore.prescribesFilter == null,
+
                 ))
           ]),
         );
